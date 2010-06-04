@@ -14,11 +14,24 @@ cmpthese(1000000, {
 
 __END__
 
-* PowerBookG4/perl 5.10.0
+* PowerBookG4/perl 5.8.8
+                 Rate Allocation1 Allocation2 Allocation3   Expansion
+Allocation1  729927/s          --        -23%        -45%        -67%
+Allocation2  943396/s         29%          --        -29%        -58%
+Allocation3 1333333/s         83%         41%          --        -40%
+Expansion   2222222/s        204%        136%         67%          --
 
+* PowerBookG4/perl 5.10.0
                  Rate Allocation1 Allocation2 Allocation3   Expansion
 Allocation1  578035/s          --        -23%        -39%        -66%
 Allocation2  746269/s         29%          --        -22%        -56%
 Allocation3  952381/s         65%         28%          --        -44%
 Expansion   1694915/s        193%        127%         78%          --
+
+* PowerBookG4/perl 5.12.0
+                 Rate Allocation2 Allocation1 Allocation3   Expansion
+Allocation2  990099/s          --         -0%         -8%        -42%
+Allocation1  990099/s          0%          --         -8%        -42%
+Allocation3 1075269/s          9%          9%          --        -37%
+Expansion   1694915/s         71%         71%         58%          --
 
