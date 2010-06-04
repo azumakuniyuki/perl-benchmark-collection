@@ -33,7 +33,15 @@ isa_ok( DateT->make(1), q|DateTime| );
 isa_ok( TimeP->make(1), q|Time::Piece| );
 
 cmpthese(10000, { 
-	'DateTime' =>    sub { TimeP->make( int(rand(1<<24) ); },
-	'Time::Piece' => sub { DateT->make( int(rand(1<<24) ); },
+	'DateTime' =>    sub { DateT->make( int(rand(1<<24)) ); },
+	'Time::Piece' => sub { TimeP->make( int(rand(1<<24)) ); },
 });
+
+__END__
+
+* PowerBookG4/perl 5.10.0
+
+               Rate    DateTime Time::Piece
+DateTime      296/s          --        -98%
+Time::Piece 12346/s       4067%          --
 
