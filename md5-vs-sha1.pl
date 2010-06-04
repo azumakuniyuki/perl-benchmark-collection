@@ -27,3 +27,8 @@ __END__
 Digest::SHA  52910/s          --        -81%
 Digest::MD5 273224/s        416%          --
 
+* PowerBookG4/perl 5.12.0
+Rate Digest::SHA Digest::MD5
+Digest::SHA  58366/s          --        -82%
+Digest::MD5 315789/s        441%          --
+

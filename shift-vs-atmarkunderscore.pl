@@ -36,9 +36,25 @@ cmpthese( 300000, {
 
 __END__
 
+* PowerBookG4/perl 5.8.8
+config_args='-ds -e -Dprefix=/usr -Dccflags=-g  -pipe  -Dldflags= -Dman3ext=3pm -Duseithreads -Duseshrplib'
+           Rate  shift     @_ nocopy
+shift  370370/s     --   -14%   -40%
+@_     428571/s    16%     --   -30%
+nocopy 612245/s    65%    43%     --
+
+
 * PowerBookG4/perl 5.10.0
+config_args='-Dprefix=/usr/local -Dusethreads -Duseithreads -des -Dldflags=-Dman3ext=3pm'
            Rate     @_  shift nocopy
 @_     144928/s     --   -48%   -71%
 shift  277778/s    92%     --   -45%
 nocopy 508475/s   251%    83%     --
+
+* PowerBookG4/perl 5.12.0
+config_args='-des -Dprefix=/opt'
+           Rate  shift     @_ nocopy
+shift  291262/s     --   -15%   -45%
+@_     340909/s    17%     --   -35%
+nocopy 526316/s    81%    54%     --
 
