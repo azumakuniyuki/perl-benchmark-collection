@@ -44,7 +44,7 @@ is( useforloop(), $R, 'for()' );
 is( useforeach(), $R, 'foreach()' );
 is( usewhile(), $R, 'while()' );
 
-cmpthese( 5000, {
+cmpthese( 10000, {
 		"for()"	=> \&useforloop,
 		"foreach()" => \&useforeach,
 		"while()" => \&usewhile,
@@ -52,10 +52,24 @@ cmpthese( 5000, {
 
 __END__
 
+* PowerBookG5/perl 5.8.8
+            (warning: too few iterations for a reliable count)
+               Rate     for() foreach()   while()
+for()        1238/s        --      -48%     -100%
+foreach()    2398/s       94%        --     -100%
+while()   1000000/s    80700%    41600%        --
+
 * PowerBookG4/perl 5.10.0
             (warning: too few iterations for a reliable count)
               Rate     for() foreach()   while()
-for()        906/s        --      -51%     -100%
-foreach()   1859/s      105%        --     -100%
-while()   500000/s    55100%    26800%        --
+for()        876/s        --      -49%     -100%
+foreach()   1704/s       94%        --     -100%
+while()   500000/s    56950%    29250%        --
+
+* PowerBookG4/perl 5.12.0
+            (warning: too few iterations for a reliable count)
+               Rate     for() foreach()   while()
+for()         932/s        --      -49%     -100%
+foreach()    1835/s       97%        --     -100%
+while()   1000000/s   107200%    54400%        --
 
