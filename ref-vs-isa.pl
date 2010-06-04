@@ -26,3 +26,8 @@ __END__
 isa() 352113/s    --  -29%
 ref() 495050/s   41%    --
 
+* PowerBookG4/perl 5.12.0
+          Rate isa() ref()
+isa() 413223/s    --  -21%
+ref() 520833/s   26%    --
+
