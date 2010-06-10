@@ -6,11 +6,11 @@ use Test::More 'no_plan';
 my $V = 'perl 5.8.8';
 my $E = '<postmaster@example.jp>';
 
-sub ss { my $x = shift(); my $y = shift(); $x =~ s{\D}{}g; $y =~ s{[<>]}{}g; return($x.$y); }
-sub yy { my $x = shift(); my $y = shift(); $x =~ y{[0-9]}{}cd; $y =~ y{[<>]}{}d; return($x.$y); }
+sub ss { my $x = shift(); my $y = shift(); $x =~ s{\D}{}g; $y =~ s{[<>]}{}g; $y =~ s{x}{X}g; return($x.$y); }
+sub yy { my $x = shift(); my $y = shift(); $x =~ y{[0-9]}{}cd; $y =~ y{[<>]}{}d; $y =~ y{x}{X}; return($x.$y); }
 
-is( ss($V,$E), '588postmaster@example.jp' );
-is( yy($V,$E), '588postmaster@example.jp' );
+is( ss($V,$E), '588postmaster@eXample.jp' );
+is( yy($V,$E), '588postmaster@eXample.jp' );
 
 cmpthese(500000, { 
 	's///g' => sub { &ss($V,$E) }, 
@@ -21,16 +21,16 @@ __END__
 
 * PowerBookG4/Perl 5.8.8
           Rate s///g y///d
-s///g 169492/s    --  -54%
-y///d 370370/s  119%    --
+s///g 137363/s    --  -56%
+y///d 314465/s  129%    --
 
 * PowerBookG4/Perl 5.10.0
           Rate s///g y///d
-s///g 103950/s    --  -63%
-y///d 282486/s  172%    --
+s///g  83056/s    --  -66%
+y///d 247525/s  198%    --
 
 * PowerBookG4/Perl 5.12.0
           Rate s///g y///d
-s///g  77519/s    --  -71%
-y///d 264550/s  241%    --
+s///g  65531/s    --  -72%
+y///d 230415/s  252%    --
 
