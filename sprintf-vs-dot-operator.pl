@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# switch() v.s. if()-else() v.s. Ternary
+# sprintf() v.s. . (dot operator)
 use strict;
 use warnings;
 use Benchmark ':all';
