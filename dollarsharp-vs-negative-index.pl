@@ -5,12 +5,12 @@ use warnings;
 use Benchmark ':all';
 use Test::More 'no_plan';
 
-my @ARRAY = ( 0..99 );
-sub dollarsharp { return $ARRAY[ $#ARRAY ]; }
-sub negativeidx { return $ARRAY[-1]; }
+my @Data = ( 0..99 );
+sub dollarsharp { return $Data[ $#Data ] + $Data[ $#Data - 1 ]; }
+sub negativeidx { return $Data[-1] + $Data[-2]; }
 
-is( dollarsharp(), 99 );
-is( negativeidx(), 99 );
+is( dollarsharp(), 197 );
+is( negativeidx(), 197 );
 
 cmpthese(1000000, { 
 	'$x[$#x]' => sub { &dollarsharp() }, 
@@ -20,17 +20,17 @@ cmpthese(1000000, {
 __END__
 
 * PowerBookG4/perl 5.8.8
-             Rate $x[$#x]  $x[-1]
-$x[$#x]  961538/s      --    -26%
-$x[-1]  1298701/s     35%      --
+            Rate $x[$#x]  $x[-1]
+$x[$#x] 558659/s      --    -42%
+$x[-1]  961538/s     72%      --
 
 * PowerBookG4/perl 5.10.0
-             Rate $x[$#x]  $x[-1]
-$x[$#x]  735294/s      --    -34%
-$x[-1]  1111111/s     51%      --
+            Rate $x[$#x]  $x[-1]
+$x[$#x] 374532/s      --    -49%
+$x[-1]  729927/s     95%      --
 
 * PowerBookG4/perl 5.12.0
-             Rate $x[$#x]  $x[-1]
-$x[$#x]  781250/s      --    -26%
-$x[-1]  1052632/s     35%      --
+            Rate $x[$#x]  $x[-1]
+$x[$#x] 448430/s      --    -39%
+$x[-1]  735294/s     64%      --
 
