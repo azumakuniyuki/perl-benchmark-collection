@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use Benchmark ':all';
 use Test::More 'no_plan';
+use List::Util;
 
 my $Data = [ 0..99 ];
 sub createbyforloop
@@ -20,14 +21,23 @@ sub createbymapfunc
 	my $y = [ map { int sqrt($_) } @$x ];
 }
 
+sub createbyluapply
+{
+	my $x = shift();
+	my $y = [ List::Util::apply { int sqrt($_) } @$x ];
+}
+
 my $f = createbyforloop($Data);
 my $m = createbymapfunc($Data);
+my $a = createbyluapply($Data);
 is( $f->[-1], 9 );
 is( $m->[-1], 9 );
+is( $a->[-1], 9 );
 
 cmpthese(10000, { 
 	'for()' => sub { &createbyforloop($Data) }, 
 	'map{}' => sub { &createbymapfunc($Data) }, 
+	'apply' => sub { &createbyluapply($Data) }, 
 });
 
 __END__
