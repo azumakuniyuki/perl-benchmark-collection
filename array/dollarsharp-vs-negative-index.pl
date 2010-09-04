@@ -13,7 +13,7 @@ is( dollarsharp(), 197 );
 is( negativeidx(), 197 );
 
 cmpthese(1000000, { 
-	'$x[$#x]' => sub { &dollarsharp() }, 
+	'$x[$#x]' => sub { dollarsharp() }, 
 	'$x[-1]' => sub { negativeidx() }, 
 });
 
