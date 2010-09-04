@@ -10,15 +10,13 @@ my $email = 'postmaster@example.jp';
 sub gethostbysplit
 {
 	my $x = shift();
-	my @y = split( '@', $x );
-	return $y[1];
+	return [split( '@', $x )]->[1];
 }
 
 sub gethostbyregex
 {
 	my $x = shift();
-	( my $y = $x ) =~ s{\A.+[@]}{};
-	return $y;
+	return $1 if( $x =~ m{[@](.+)\z} );
 }
 
 is( gethostbysplit($email), 'example.jp' );
@@ -34,16 +32,15 @@ __END__
 
 * PowerBookG5/perl 5.8.8
           Rate split regex
-split 208333/s    --  -37%
-regex 333333/s   60%    --
+split 215517/s    --  -49%
+regex 420168/s   95%    --
 
 * PowerBookG4/perl 5.10.0
           Rate split regex
-split 138504/s    --  -52%
-regex 289017/s  109%    --
+split 136612/s    --  -41%
+regex 230415/s   69%    --
 
 * PowerBookG4/perl 5.12.0
           Rate split regex
-split 177936/s    --  -45%
-regex 322581/s   81%    --
-
+split 162338/s    --  -47%
+regex 304878/s   88%    --
