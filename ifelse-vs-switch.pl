@@ -118,5 +118,9 @@ switch-case      1337/s              --            -96%            -96%
 ternary ? 1 : 0 31250/s           2237%              --             -0%
 if-elsif-else   31250/s           2237%              0%              --
 
-
+* Ubuntu 8.04 LTS/perl 5.10.1
+                   Rate     switch-case   if-elsif-else ternary ? 1 : 0
+switch-case      2174/s              --            -97%            -98%
+if-elsif-else   76923/s           3438%              --            -12%
+ternary ? 1 : 0 86957/s           3900%             13%              --
 

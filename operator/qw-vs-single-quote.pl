@@ -33,3 +33,8 @@ qw(a b c d) 340136/s          --         -1%
 qw(a b c d) 403226/s          --         -1%
 'a','b','c' 406504/s          1%          --
 
+* Ubuntu 8.04 LTS/perl 5.10.1
+                Rate qw(a b c d) 'a','b','c'
+qw(a b c d) 694444/s          --         -1%
+'a','b','c' 704225/s          1%          --
+

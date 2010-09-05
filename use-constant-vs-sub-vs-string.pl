@@ -47,3 +47,10 @@ my $variable 438596/s           2%           --          -5%          -6%
 stringstring 462963/s           7%           6%           --          -1%
 subroutine() 467290/s           8%           7%           1%           --
 
+* Ubuntu 8.04 LTS/perl 5.10.1
+                 Rate my $variable subroutine() stringstring use constant
+my $variable 781250/s           --         -11%         -13%         -16%
+subroutine() 877193/s          12%           --          -2%          -5%
+stringstring 892857/s          14%           2%           --          -4%
+use constant 925926/s          19%           6%           4%           --
+

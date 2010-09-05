@@ -47,3 +47,8 @@ Group Only 59347/s         6%         --
 Do Capture 92166/s         --        -7%
 Group Only 99010/s         7%         --
 
+* Ubuntu 8.04 LTS/perl 5.10.1
+               Rate Do Capture Group Only
+Do Capture 152672/s         --       -11%
+Group Only 172414/s        13%         --
+

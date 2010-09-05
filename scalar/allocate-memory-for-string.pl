@@ -35,3 +35,11 @@ Allocation1  990099/s          0%          --         -8%        -42%
 Allocation3 1075269/s          9%          9%          --        -37%
 Expansion   1694915/s         71%         71%         58%          --
 
+* Ubuntu 8.04 LTS/perl 5.10.1
+            (warning: too few iterations for a reliable count)
+                 Rate Allocation1 Allocation2 Allocation3   Expansion
+Allocation1  847458/s          --        -24%        -39%        -69%
+Allocation2 1111111/s         31%          --        -20%        -59%
+Allocation3 1388889/s         64%         25%          --        -49%
+Expansion   2702703/s        219%        143%         95%          --
+

@@ -47,3 +47,8 @@ sprintf() 232558/s        --      -14%
 sprintf() 285714/s        --       -1%
 .operator 289855/s        1%        --
 
+* Ubuntu 8.04 LTS/perl 5.10.1
+              Rate sprintf() .operator
+sprintf() 465116/s        --       -2%
+.operator 476190/s        2%        --
+

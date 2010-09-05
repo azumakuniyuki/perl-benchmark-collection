@@ -36,3 +36,10 @@ underscore: -f _ 14706/s               7%               --
 filename   14286/s         --       -10%
 underscore 15873/s        11%         --
 
+* Ubuntu 8.04 LTS/perl 5.10.1
+            (warning: too few iterations for a reliable count)
+            (warning: too few iterations for a reliable count)
+              Rate   filename underscore
+filename   43478/s         --       -26%
+underscore 58824/s        35%         --
+

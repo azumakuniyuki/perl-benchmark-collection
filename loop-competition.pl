@@ -73,3 +73,10 @@ for()         932/s        --      -49%     -100%
 foreach()    1835/s       97%        --     -100%
 while()   1000000/s   107200%    54400%        --
 
+* Ubuntu 8.04 LTS/perl 5.10.1
+            (warning: too few iterations for a reliable count)
+                            Rate               for()           foreach() while()
+for()                     2212/s                  --                -58%   -100%
+foreach()                 5319/s                140%                  --   -100%
+while()   10000000000000000000/s 452000000000000064% 188000000000000096%      --
+

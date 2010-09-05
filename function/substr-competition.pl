@@ -35,3 +35,9 @@ lvalue 264901/s     --   -50%
 lvalue 322581/s     --   -39%
 4argvs 526316/s    63%     --
 
+* Ubuntu 8.04 LTS/perl 5.10.1
+            (warning: too few iterations for a reliable count)
+            Rate lvalue 4argvs
+lvalue  625000/s     --   -41%
+4argvs 1052632/s    68%     --
+

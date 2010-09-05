@@ -66,6 +66,7 @@ UsePipe(m//) 465116/s          30%           --
 3 Times(s//) 23229/s           --         -25%
 UsePipe(s//) 30864/s          33%           --
 
+
 * PowerBookG4/perl 5.12.0
 Rate 3 Times(m//) UsePipe(m//)
 3 Times(m//) 363636/s           --         -20%
@@ -74,4 +75,16 @@ UsePipe(m//) 454545/s          25%           --
 Rate 3 Times(s//) UsePipe(s//)
 3 Times(s//) 31746/s           --         -39%
 UsePipe(s//) 51948/s          64%           --
+
+
+* Ubuntu 8.04 LTS/perl 5.10.1
+            (warning: too few iterations for a reliable count)
+            (warning: too few iterations for a reliable count)
+                  Rate 3 Times(m//) UsePipe(m//)
+3 Times(m//)  740741/s           --         -26%
+UsePipe(m//) 1000000/s          35%           --
+
+                Rate 3 Times(s//) UsePipe(s//)
+3 Times(s//) 65789/s           --         -30%
+UsePipe(s//) 93897/s          43%           --
 

@@ -58,3 +58,10 @@ shift  291262/s     --   -15%   -45%
 @_     340909/s    17%     --   -35%
 nocopy 526316/s    81%    54%     --
 
+* Ubuntu 8.04 LTS/perl 5.10.1
+            (warning: too few iterations for a reliable count)
+           Rate     @_  shift nocopy
+@_     483871/s     --    -6%   -42%
+shift  517241/s     7%     --   -38%
+nocopy 833333/s    72%    61%     --
+

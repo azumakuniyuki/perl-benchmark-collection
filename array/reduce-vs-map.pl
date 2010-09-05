@@ -35,3 +35,8 @@ map {} 22422/s   143%     --
 map {} 20000/s     --   -10%
 reduce 22321/s    12%     --
 
+* Ubuntu 8.04 LTS/perl 5.10.1
+          Rate reduce map {}
+reduce 33113/s     --   -36%
+map {} 51546/s    56%     --
+

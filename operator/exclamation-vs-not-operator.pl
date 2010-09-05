@@ -33,3 +33,10 @@ not $_ 724638/s     --    -4%
 not $_ 675676/s     --    -3%
 ! $_   694444/s     3%     --
 
+* Ubuntu 8.04 LTS/perl 5.10.1
+            (warning: too few iterations for a reliable count)
+            (warning: too few iterations for a reliable count)
+            Rate not $_   ! $_
+not $_ 1470588/s     --    -9%
+! $_   1612903/s    10%     --
+

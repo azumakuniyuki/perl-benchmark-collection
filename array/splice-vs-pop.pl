@@ -34,3 +34,8 @@ pop    35348/s     3%     --
 splice 39062/s     --    -1%
 pop    39417/s     1%     --
 
+* Ubuntu 8.04 LTS/perl 5.10.1
+           Rate splice    pop
+splice  98912/s     --    -2%
+pop    100705/s     2%     --
+

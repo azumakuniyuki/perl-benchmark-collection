@@ -42,4 +42,10 @@ return @C 6024/s       47%       12%        --
 ($#A + 1) 4566/s        --      -13%      -21%
 scalar @B 5236/s       15%        --      -10%
 return @C 5814/s       27%       11%        --
-	    
+
+* Ubuntu 8.04 LTS/perl 5.10.1
+             Rate ($#A + 1) scalar @B return @C
+($#A + 1)  9524/s        --      -19%      -26%
+scalar @B 11765/s       24%        --       -8%
+return @C 12821/s       35%        9%        --
+

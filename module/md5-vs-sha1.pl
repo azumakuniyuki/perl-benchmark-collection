@@ -32,3 +32,9 @@ Rate Digest::SHA Digest::MD5
 Digest::SHA  58366/s          --        -82%
 Digest::MD5 315789/s        441%          --
 
+* Ubuntu 8.04 LTS/perl 5.10.1
+            (warning: too few iterations for a reliable count)
+                Rate Digest::SHA Digest::MD5
+Digest::SHA 120000/s          --        -84%
+Digest::MD5 769231/s        541%          --
+

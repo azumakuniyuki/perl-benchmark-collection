@@ -44,3 +44,9 @@ Use scalar value 458716/s               --              -4%              -5%
 Use single quote 476190/s               4%               --              -1%
 Not single quote 480769/s               5%               1%               --
 
+* Ubuntu 8.04 LTS/perl 5.10.1
+                      Rate Use single quote Use scalar value Not single quote
+Use single quote  847458/s               --              -7%             -25%
+Use scalar value  909091/s               7%               --             -20%
+Not single quote 1136364/s              34%              25%               --
+

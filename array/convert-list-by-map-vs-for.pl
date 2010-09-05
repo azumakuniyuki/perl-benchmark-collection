@@ -69,3 +69,12 @@ map{$_ = ...}  6667/s            5%            --          -51%          -51%
 for my $x(..) 13514/s          112%          103%            --           -1%
 foreach my $x 13699/s          115%          105%            1%            --
 
+* Ubuntu 8.04 LTS/perl 5.10.1
+            (warning: too few iterations for a reliable count)
+            (warning: too few iterations for a reliable count)
+                 Rate map{$_ = ...} @x = map{...} for my $x(..) foreach my $x
+map{$_ = ...} 15152/s            --           -2%          -61%          -61%
+@x = map{...} 15385/s            2%            --          -60%          -60%
+for my $x(..) 38462/s          154%          150%            --            0%
+foreach my $x 38462/s          154%          150%            0%            --
+

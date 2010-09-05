@@ -35,3 +35,8 @@ Perl6::Slurp->slurp      5556/s                     141%                      --
 Path::Class::File->slurp 3279/s                       --                    -56%
 Perl6::Slurp->slurp      7463/s                     128%                      --
 
+* Ubuntu 8.04 LTS/perl 5.10.1
+                            Rate Path::Class::File->slurp    Perl6::Slurp->slurp
+Path::Class::File->slurp  6711/s                       --                   -56%
+Perl6::Slurp->slurp      15152/s                     126%                     --
+

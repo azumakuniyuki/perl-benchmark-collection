@@ -41,3 +41,10 @@ unpack 133690/s     --   -66%   -85%
 regexp 396825/s   197%     --   -55%
 substr 877193/s   556%   121%     --
 
+* Ubuntu 8.04 LTS/perl 5.10.1
+            (warning: too few iterations for a reliable count)
+            Rate unpack regexp substr
+unpack  328947/s     --   -62%   -82%
+regexp  862069/s   162%     --   -53%
+substr 1851852/s   463%   115%     --
+
