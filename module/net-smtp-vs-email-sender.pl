@@ -77,7 +77,6 @@
 	use Test::More 'no_plan';
 	use Email::MIME;
 	use Email::MIME::Creator;
-	use Encode;
 
 	my $S = 'postmaster@example.org';
 	my $R = 'dev-null@example.jp';
@@ -89,10 +88,10 @@
 			],
 			'attributes' => {
 				'content_type' => 'text/plain',
-				'charset' => 'ISO-2022-JP',
+				'charset' => 'ISO-8859-1',
 				'encoding' => '7bit',
 			},
-			'body' => encode( 'iso-2022-jp' => 'テスト本文' )
+			'body' => 'TEST',
 		);
 
 	ok( ES1->sendmesg($S,$R,$M), 'Email::Send' );
