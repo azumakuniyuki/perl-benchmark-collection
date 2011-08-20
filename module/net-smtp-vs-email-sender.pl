@@ -154,10 +154,3 @@ sub queue_message
 	return(1, 250, 'message queued');
 }
 
-
-* PowerBookG4/perl 5.10.0
-
-               Rate    DateTime Time::Piece
-DateTime      296/s          --        -98%
-Time::Piece 12346/s       4067%          --
-
