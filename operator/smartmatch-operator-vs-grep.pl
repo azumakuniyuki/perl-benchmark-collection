@@ -92,6 +92,21 @@ smart~~ 412844/s    121%      --
 == 1503759/s  -- -2%
 ~~ 1526718/s  2%  --
 
+
+* OpenBSD 5.2/Perl 5.12.2
+grep eq 322581/s      --    -40%
+smart~~ 540541/s     68%      --
+
+           Rate grep == smart~~
+grep ==  3867/s      --    -79%
+smart~~ 18248/s    372%      --
+
+       Rate  ~~  ==
+~~ 869565/s  -- -3%
+== 898876/s  3%  --
+
+
+
 % perl -v |head -2
 This is perl 5, version 14, subversion 2 (v5.14.2) built for darwin-2level
 
