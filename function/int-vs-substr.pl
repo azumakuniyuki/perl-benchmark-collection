@@ -12,7 +12,7 @@ is( asinteger, 5 );
 is( usesubstr, 5 );
 is( withregex, 5 );
 
-cmpthese(400000, { 
+cmpthese(1500000, { 
 	'as integer' => sub { asinteger() },
 	'with regex' => sub { withregex() },
 	'use substr' => sub { usesubstr() },
@@ -37,3 +37,14 @@ with regex 606061/s         --        -9%       -15%
 as integer 666667/s        10%         --        -7%
 use substr 714286/s        18%         7%         --
 
+* Mac OS X 10.7.5/Perl 5.14.2
+                Rate with regex use substr as integer
+with regex 2419355/s         --       -23%       -29%
+use substr 3125000/s        29%         --        -8%
+as integer 3409091/s        41%         9%         --
+
+* OpenBSD 5.2/Perl 5.12.2
+                Rate with regex as integer use substr
+with regex 1006711/s         --        -8%       -17%
+as integer 1094891/s         9%         --        -9%
+use substr 1209677/s        20%        10%         --
