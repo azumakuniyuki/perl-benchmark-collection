@@ -5,8 +5,21 @@ use warnings;
 use Benchmark ':all';
 use Test::More 'no_plan';
 
-sub plusbrace { my $x = shift; my $y = +{ 'x' => $x }; my $z = +{ 'z' => $y->{x} }; return +{ 'y' => ($y->{x} + $z->{z}) }; }
-sub braceonly { my $x = shift; my $y =  { 'x' => $x }; my $z =  { 'z' => $y->{x} }; return  { 'y' => ($y->{x} + $z->{z}) }; }
+sub plusbrace
+{ 
+	my $x = shift; 
+	my $y = +{ 'x' => $x }; 
+	my $z = +{ 'z' => $y->{'x'} };
+	return +{ 'y' => ( $y->{'x'} + $z->{'z'} ) };
+}
+
+sub braceonly
+{ 
+	my $x = shift; 
+	my $y = { 'x' => $x }; 
+	my $z = { 'z' => $y->{'x'} };
+	return { 'y' => ( $y->{'x'} + $z->{'z'} ) };
+}
 
 isa_ok( plusbrace(1), q|HASH| );
 isa_ok( braceonly(1), q|HASH| );
@@ -37,4 +50,14 @@ __END__
         Rate  {} +{}
  {} 218341/s  -- -2%
 +{} 222222/s  2%  --
+
+* Mac OS X 10.7.5/Perl 5.14.2
+        Rate  {} +{}
+ {} 396825/s  -- -2%
++{} 406504/s  2%  --
+
+* OpenBSD 5.2/Perl 5.12.2
+        Rate +{}  {}
++{} 170068/s  -- -3%
+ {} 174825/s  3%  --
 
