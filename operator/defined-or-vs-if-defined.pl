@@ -21,9 +21,9 @@ ok( definedor(0,1) );
 ok( ifdefined(0,1) );
 
 cmpthese( 900000, { 
-		'defined-or' => sub { definedor(0,1) },
-		'if-defined' => sub { ifdefined(0,1) },
-	});
+	'defined-or' => sub { definedor(0,1) },
+	'if-defined' => sub { ifdefined(0,1) },
+});
 
 __END__
 
@@ -37,4 +37,7 @@ defined-or 1875000/s        12%         --
 if-defined 1153846/s         --        -9%
 defined-or 1267606/s        10%         --
 
-
+* OpenBSD 5.2/Perl 5.12.2
+               Rate if-defined defined-or
+if-defined 743802/s         --        -2%
+defined-or 756303/s         2%         --
