@@ -5,37 +5,26 @@ use warnings;
 use Benchmark ':all';
 use Test::More 'no_plan';
 
-my @Data = ( 0..99 );
-sub dollarsharp { return $Data[ $#Data ] + $Data[ $#Data - 1 ]; }
-sub negativeidx { return $Data[-1] + $Data[-2]; }
+my $L = [ 0 .. 1023 ];
+sub dollarsharp { return $L->[ $#$L ] + $L->[ $#$L - 1 ]; }
+sub negativeidx { return $L->[-1] + $L->[-2]; }
 
-is( dollarsharp(), 197 );
-is( negativeidx(), 197 );
+is( dollarsharp(), 2045 );
+is( negativeidx(), 2045 );
 
-cmpthese(1000000, { 
-	'$x[$#x]' => sub { dollarsharp() }, 
-	'$x[-1]' => sub { negativeidx() }, 
+cmpthese(2000000, { 
+	'$x->[$#x]' => sub { dollarsharp() }, 
+	'$x->[-1]' => sub { negativeidx() }, 
 });
 
 __END__
 
-* PowerBookG4/perl 5.8.8
-            Rate $x[$#x]  $x[-1]
-$x[$#x] 558659/s      --    -42%
-$x[-1]  961538/s     72%      --
+* Mac OS X 10.7.5/Perl 5.14.2
+               Rate $x->[$#x]  $x->[-1]
+$x->[$#x] 1834862/s        --      -43%
+$x->[-1]  3225806/s       76%        --
 
-* PowerBookG4/perl 5.10.0
-            Rate $x[$#x]  $x[-1]
-$x[$#x] 374532/s      --    -49%
-$x[-1]  729927/s     95%      --
-
-* PowerBookG4/perl 5.12.0
-            Rate $x[$#x]  $x[-1]
-$x[$#x] 448430/s      --    -39%
-$x[-1]  735294/s     64%      --
-
-* Ubuntu 8.04 LTS/perl 5.10.1
-             Rate $x[$#x]  $x[-1]
-$x[$#x]  787402/s      --    -47%
-$x[-1]  1492537/s     90%      --
-
+* OpenBSD 5.2/Perl 5.12.2
+               Rate $x->[$#x]  $x->[-1]
+$x->[$#x]  729927/s        --      -37%
+$x->[-1]  1156069/s       58%        --
