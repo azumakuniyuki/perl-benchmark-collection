@@ -16,7 +16,7 @@ is( usechomp($string),'text' );
 is( usesubst($string),'text' );
 is( usetrans($string),'text' );
 
-cmpthese(500000, { 
+cmpthese(1800000, { 
 	'chop()' => sub { &usechop($string) }, 
 	'chomp()' => sub { &usechomp($string) }, 
 	's///' => sub { &usesubst($string) }, 
@@ -53,3 +53,16 @@ y///     833333/s     57%      --     -2%    -27%
 chop()   847458/s     59%      2%      --    -25%
 chomp() 1136364/s    114%     36%     34%      --
 
+* Mac OS X 10.7.5/Perl 5.14.2
+             Rate    s///    y/// chomp()  chop()
+s///    1666667/s      --    -31%    -38%    -39%
+y///    2432432/s     46%      --     -9%    -11%
+chomp() 2686567/s     61%     10%      --     -1%
+chop()  2727273/s     64%     12%      2%      --
+
+* OpenBSD 5.2/Perl 5.12.2
+            Rate    s///    y///  chop() chomp()
+s///    586319/s      --    -34%    -38%    -39%
+y///    891089/s     52%      --     -5%     -7%
+chop()  942408/s     61%      6%      --     -2%
+chomp() 957447/s     63%      7%      2%      --
