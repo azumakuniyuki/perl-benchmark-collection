@@ -5,51 +5,57 @@ use warnings;
 use Benchmark ':all';
 use Test::More 'no_plan';
 
-my $Data = [ 0..99 ];
-sub createbyforloop
+sub useforloop
 {
-	my $x = shift();
+	my $x = shift;
 	my $y = [];
-	for my $z ( @$x ){ push( @$y, int sqrt $z ); }
+	for my $z ( @$x )
+	{ 
+		push @$y, int sqrt $z; 
+	}
 	return $y;
 }
 
-sub createbymapfunc
+sub usemapfunc1
 {
-	my $x = shift();
-	my $y = [ map { int sqrt($_) } @$x ];
+	my $x = shift;
+	my $y = [];
+	$y = [ map { int sqrt($_) } @$x ];
 	return $y;
 }
 
-my $f = createbyforloop($Data);
-my $m = createbymapfunc($Data);
-is( $f->[-1], 9 );
-is( $m->[-1], 9 );
+sub usemapfunc2
+{
+	my $x = shift;
+	my $y = [];
+	map { push @$y, int sqrt($_) } @$x;
+	return $y;
+}
 
-cmpthese(10000, { 
-	'for()' => sub { &createbyforloop($Data) }, 
-	'map {...}' => sub { &createbymapfunc($Data) }, 
+my $L = [ 0..99 ];
+my $R = [];
+
+$R = useforloop($L);  is( $R->[-1], 9 );
+$R = usemapfunc1($L); is( $R->[-1], 9 );
+$R = usemapfunc2($L); is( $R->[-1], 9 );
+
+cmpthese(90000, { 
+	'for(){ push @x .. }' => sub { &useforloop($L) }, 
+	'$x = [ map {...;} ]' => sub { &usemapfunc1($L) }, 
+	'map { push @x ... }' => sub { &usemapfunc2($L) }, 
 });
 
 __END__
 
-* PowerBookG4/perl 5.8.8
-             Rate     for() map {...}
-for()      9091/s        --      -10%
-map {...} 10101/s       11%        --
+* Mac OS X 10.7.5/Perl 5.14.2
+                       Rate map { push @x ... } $x = [ map {...;} ] for(){ push @x .. }
+map { push @x ... } 45918/s                  --                 -1%                 -2%
+$x = [ map {...;} ] 46154/s                  1%                  --                 -2%
+for(){ push @x .. } 46875/s                  2%                  2%                  --
 
-* PowerBookG4/perl 5.10.0
-            Rate     for() map {...}
-for()     6494/s        --      -14%
-map {...} 7519/s       16%        --
-
-* PowerBookG4/perl 5.12.0
-            Rate     for() map {...}
-for()     7752/s        --       -5%
-map {...} 8130/s        5%        --
-
-* Ubuntu 8.04 LTS/perl 5.10.1
-             Rate     for() map {...}
-for()     18519/s        --      -15%
-map {...} 21739/s       17%        --
+* OpenBSD 5.2/Perl 5.12.2
+                       Rate for(){ push @x .. } map { push @x ... } $x = [ map {...;} ]
+for(){ push @x .. } 15280/s                  --                 -3%                -15%
+map { push @x ... } 15679/s                  3%                  --                -12%
+$x = [ map {...;} ] 17893/s                 17%                 14%                  --
 
