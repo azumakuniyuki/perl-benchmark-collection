@@ -11,7 +11,7 @@ sub usesq { return join('.','a','b','c','d','e','f','g'); }
 is( useqw(), 'a.b.c.d.e.f.g' );
 is( usesq(), 'a.b.c.d.e.f.g' );
 
-cmpthese(500000, { 
+cmpthese(1500000, { 
 	'qw(a b c d)' => sub { &useqw() }, 
 	"'a','b','c'" => sub { &usesq() }, 
 });
@@ -37,4 +37,14 @@ qw(a b c d) 403226/s          --         -1%
                 Rate qw(a b c d) 'a','b','c'
 qw(a b c d) 694444/s          --         -1%
 'a','b','c' 704225/s          1%          --
+
+* Mac OS X 10.7.5/Perl 5.14.2
+                 Rate qw(a b c d) 'a','b','c'
+qw(a b c d) 1764706/s          --         -7%
+'a','b','c' 1898734/s          8%          --
+
+* OpenBSD 5.2/Perl 5.12.2
+                Rate 'a','b','c' qw(a b c d)
+'a','b','c' 490196/s          --        -11%
+qw(a b c d) 553506/s         13%          --
 
