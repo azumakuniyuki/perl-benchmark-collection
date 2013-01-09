@@ -7,10 +7,10 @@ use Test::More 'no_plan';
 
 sub shiftit
 { 
-	my $x = shift();
-	my $y = shift();
-	my $z = shift();
-	return( join( '.', $x, $y, $z ) );
+	my $x = shift;
+	my $y = shift;
+	my $z = shift;
+	return join( '.', $x, $y, $z );
 }
 
 sub atmark_
@@ -28,11 +28,11 @@ is( shiftit(qw{x y z}), 'x.y.z' );
 is( atmark_(qw{x y z}), 'x.y.z' );
 is( nocopy(qw{x y z}), 'x.y.z' );
 
-cmpthese( 300000, { 
-		'shift' => sub{ &shiftit( qw{x y z} ); },
-		'@_' => sub{ &atmark_( qw{x y z} ); },
-		'nocopy' => sub{ &nocopy( qw{x y z} ); },
-	});
+cmpthese( 1400000, { 
+	'shift' => sub{ &shiftit( qw{x y z} ); },
+	'@_' => sub{ &atmark_( qw{x y z} ); },
+	'nocopy' => sub{ &nocopy( qw{x y z} ); },
+});
 
 __END__
 
@@ -64,4 +64,16 @@ nocopy 526316/s    81%    54%     --
 @_     483871/s     --    -6%   -42%
 shift  517241/s     7%     --   -38%
 nocopy 833333/s    72%    61%     --
+
+* Mac OS X 10.7.5/Perl 5.14.2
+            Rate     @_  shift nocopy
+@_     1308411/s     --    -4%   -44%
+shift  1359223/s     4%     --   -42%
+nocopy 2333333/s    78%    72%     --
+
+* OpenBSD 5.2/Perl 5.12.2
+           Rate  shift     @_ nocopy
+shift  441640/s     --    -7%   -45%
+@_     476190/s     8%     --   -40%
+nocopy 800000/s    81%    68%     --
 
