@@ -6,30 +6,40 @@ use Benchmark ':all';
 use Test::More 'no_plan';
 use feature ':5.10';
 
-sub ifelse { 
+sub ifelse
+{ 
 	my $x = shift;
 	my $y = 0;
-	if( $x =~ m{[@]yahoo[.](?:com|co[.]jp)\z} ){
+
+	if( $x =~ m{[@]yahoo[.](?:com|co[.]jp)\z} )
+	{
 		$y = 1;
 	}
-	elsif( $x =~ m{[@]gmail[.]com\z} || $x =~ m{[@]googlemail[.]com\z} ){
+	elsif( $x =~ m{[@]gmail[.]com\z} || $x =~ m{[@]googlemail[.]com\z} )
+	{
 		$y = 1;
 	}
-	else{
+	else
+	{
 		$y = 0;
 	}
 	return $y;
 }
 
-sub givenwhen {
-	my $x = shift();
+sub givenwhen 
+{
+	my $x = shift;
 	my $y = 0;
-	given( $x ){
-		when( m{[@]yahoo[.](?:com|co[.]jp)\z} ){
+
+	given( $x )
+	{
+		when( m{[@]yahoo[.](?:com|co[.]jp)\z} )
+		{
 			$y = 1;
 			break;
 		}
-		when( m{[@]gmail[.]com\z} || m{[@]googlemail[.]com\z} ){
+		when( m{[@]gmail[.]com\z} || m{[@]googlemail[.]com\z} )
+		{
 			$y = 1;
 			break;
 		}
@@ -42,9 +52,9 @@ ok( ifelse('azumakuniyuki@gmail.com') );
 ok( givenwhen('azumakuniyuki@gmail.com') );
 
 cmpthese( 900000, { 
-		'if-else' => sub { ifelse('azumakuniyuki@gmail.com') },
-		'given-w' => sub { givenwhen('azumakuniyuki@gmail.com') },
-	});
+	'if-else' => sub { ifelse('azumakuniyuki@gmail.com') },
+	'given-w' => sub { givenwhen('azumakuniyuki@gmail.com') },
+});
 
 __END__
 
@@ -58,3 +68,7 @@ if-else 1046512/s     36%      --
 given-w 548780/s      --    -18%
 if-else 666667/s     21%      --
 
+* OpenBSD 5.2/Perl 5.12.2
+            Rate given-w if-else
+given-w 337079/s      --    -24%
+if-else 445545/s     32%      --
