@@ -6,44 +6,51 @@ use Benchmark ':all';
 use Test::More 'no_plan';
 
 my @Data = ( 0..99 );
-sub convertbyforeach
+sub useforeach
 {
-	my $x = shift();
-	foreach my $y ( @$x ){ $y = int sqrt($y); }
+	my $x = shift;
+	foreach my $y ( @$x )
+	{
+		$y = int sqrt($y);
+	}
 }
 
-sub convertbyforloop
+sub useforloop
 {
-	my $x = shift();
-	for my $y ( @$x ){ $y = int sqrt($y); }
+	my $x = shift;
+	for my $y ( @$x )
+	{
+		$y = int sqrt($y);
+	}
 }
 
-sub convertbymapfunc
+sub usemapfunc1
 {
-	my $x = shift();
+	my $x = shift;
 	@$x = map { int sqrt($_) } @$x;
 }
 
-sub convertbymapitself
+sub usemapfunc2
 {
-	my $x = shift();
+	my $x = shift;
 	map { $_ = int sqrt($_) } @$x;
 }
 
-my @W = @Data; convertbyforeach(\@W);
-my @X = @Data; convertbyforloop(\@X);
-my @Y = @Data; convertbymapfunc(\@Y);
-my @Z = @Data; convertbymapitself(\@Z);
+my @W = @Data; useforeach(\@W);
+my @X = @Data; useforloop(\@X);
+my @Y = @Data; usemapfunc1(\@Y);
+my @Z = @Data; usemapfunc2(\@Z);
+
 is( $W[-1], 9 ); @W = @Data;
 is( $X[-1], 9 ); @X = @Data;
 is( $Y[-1], 9 ); @Y = @Data;
 is( $Z[-1], 9 ); @Z = @Data;
 
-cmpthese(10000, { 
-	'foreach my $x' => sub { &convertbyforeach(\@W) },
-	'for my $x(..)' => sub { &convertbyforloop(\@X) }, 
-	'@x = map{...}' => sub { &convertbymapfunc(\@Y) }, 
-	'map{$_ = ...}' => sub { &convertbymapitself(\@Z) }, 
+cmpthese(50000, { 
+	'foreach my $x' => sub { &useforeach( \@W ) },
+	'for my $x(..)' => sub { &useforloop( \@X ) }, 
+	'@x = map {..}' => sub { &usemapfunc1( \@Y ) }, 
+	'map { $_ = .}' => sub { &usemapfunc2( \@Z ) }, 
 });
 
 __END__
@@ -78,3 +85,16 @@ map{$_ = ...} 15152/s            --           -2%          -61%          -61%
 for my $x(..) 38462/s          154%          150%            --            0%
 foreach my $x 38462/s          154%          150%            0%            --
 
+* Mac OS X 10.7.5/Perl 5.14.2
+                 Rate @x = map {..} map { $_ = .} foreach my $x for my $x(..)
+@x = map {..} 31250/s            --          -11%          -61%          -64%
+map { $_ = .} 35211/s           13%            --          -56%          -59%
+foreach my $x 80645/s          158%          129%            --           -6%
+for my $x(..) 86207/s          176%          145%            7%            --
+
+* OpenBSD 5.2/Perl 5.12.2
+                 Rate @x = map {..} map { $_ = .} for my $x(..) foreach my $x
+@x = map {..} 11364/s            --          -10%          -63%          -63%
+map { $_ = .} 12563/s           11%            --          -59%          -59%
+for my $x(..) 30675/s          170%          144%            --            0%
+foreach my $x 30675/s          170%          144%            0%            --
