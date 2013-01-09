@@ -5,37 +5,40 @@ use warnings;
 use Benchmark ':all';
 use Test::More 'no_plan';
 
-my @Data = ( 0..99 );
-sub popthearray { my @a = @Data; my $x = pop(@a); $x += pop(@a); return $x; }
-sub splicearray { my @a = @Data; my $x = splice(@a,-1); $x += splice(@a,-1); return $x; }
+my $L = [ 0..1023 ];
+sub usepopfunc
+{ 
+	my @x = @$L;
+	my $y = pop @x;
+	$y += pop @x;
+	return $y;
+}
 
-is( popthearray(), 197 );
-is( splicearray(), 197 );
+sub splicefunc
+{ 
+	my @x = @$L;
+	my $y = splice(@x,-1);
+	$y += splice(@x,-1); 
+	return $y;
+}
 
-cmpthese(1000000, { 
-	'pop' => sub { popthearray() }, 
-	'splice' => sub { splicearray() }, 
+is( usepopfunc(), 2045 );
+is( splicefunc(), 2045 );
+
+cmpthese(100000, { 
+	'pop @x' => sub { usepopfunc() }, 
+	'splice' => sub { splicefunc() }, 
 });
 
 __END__
 
-* PowerBookG4/perl 5.8.8
-          Rate splice    pop
-splice 46275/s     --    -1%
-pop    46707/s     1%     --
+* Mac OS X 10.7.5/Perl 5.14.2
+          Rate pop @x splice
+pop @x 20661/s     --    -0%
+splice 20704/s     0%     --
 
-* PowerBookG4/perl 5.10.0
-          Rate splice    pop
-splice 34400/s     --    -3%
-pop    35348/s     3%     --
-
-* PowerBookG4/perl 5.12.0
-          Rate splice    pop
-splice 39062/s     --    -1%
-pop    39417/s     1%     --
-
-* Ubuntu 8.04 LTS/perl 5.10.1
-           Rate splice    pop
-splice  98912/s     --    -2%
-pop    100705/s     2%     --
+* OpenBSD 5.2/Perl 5.12.2
+         Rate splice pop @x
+splice 3726/s     --     0%
+pop @x 3726/s     0%     --
 
