@@ -6,15 +6,15 @@ use Benchmark ':all';
 use Test::More 'no_plan';
 use CPAN;
 
-sub useref { my $o = shift; return(1) if( ref($o) eq q|CPAN| ); }
-sub useisa { my $o = shift; return(1) if( $o->isa(q|CPAN|) ); }
+sub useref { my $o = shift; return 1 if ref($o) eq 'CPAN'; }
+sub useisa { my $o = shift; return 1 if $o->isa('CPAN'); }
 
 my $obj = new CPAN;
 
 ok( useref($obj) );
 ok( useisa($obj) );
 
-cmpthese(500000, { 
+cmpthese(1500000, { 
 	'ref()' => sub { &useref($obj) }, 
 	'isa()' => sub { &useisa($obj) }, 
 });
@@ -41,3 +41,12 @@ ref() 515464/s   26%    --
 isa()  980392/s    --  -12%
 ref() 1111111/s   13%    --
 
+* Mac OS X 10.7.5/Perl 5.14.2
+           Rate isa() ref()
+isa() 1948052/s    --  -22%
+ref() 2500000/s   28%    --
+
+* OpenBSD 5.2/Perl 5.12.2
+          Rate isa() ref()
+isa() 672646/s    --  -20%
+ref() 837989/s   25%    --
