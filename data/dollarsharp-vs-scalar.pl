@@ -8,20 +8,20 @@ use Test::More 'no_plan';
 my @A = ();
 my @B = ();
 my @C = ();
-sub dollsharp { push( @A, shift() ); return( $#A + 1 ); }
-sub usescalar { push( @B, shift() ); return( scalar(@B) ); }
-sub usereturn { push( @C, shift() ); return @C; }
+sub dollsharp { push( @A, shift ); return $#A + 1; }
+sub usescalar { push( @B, shift ); return scalar(@B); }
+sub usereturn { push( @C, shift ); return @C; }
 
 is( dollsharp(0), 1 );
 is( usescalar(0), 1 );
 is( usereturn(0), 1 );
 
 my @Z = ( 1 .. 100 );
-cmpthese( 10000, { 
-		'($#A + 1)' => sub{ &dollsharp($_) for @Z; },
-		'scalar @B' => sub{ &usescalar($_) for @Z; },
-		'return @C' => sub{ &usereturn($_) for @Z; },
-	});
+cmpthese( 70000, { 
+	'($#A + 1)' => sub { &dollsharp($_) for @Z; },
+	'scalar @B' => sub { &usescalar($_) for @Z; },
+	'return @C' => sub { &usereturn($_) for @Z; },
+});
 
 __END__
 
@@ -48,4 +48,16 @@ return @C 5814/s       27%       11%        --
 ($#A + 1)  9524/s        --      -19%      -26%
 scalar @B 11765/s       24%        --       -8%
 return @C 12821/s       35%        9%        --
+
+* Mac OS X 10.7.5/Perl 5.14.2
+             Rate ($#A + 1) scalar @B return @C
+($#A + 1) 23569/s        --      -17%      -21%
+scalar @B 28455/s       21%        --       -4%
+return @C 29787/s       26%        5%        --
+
+* OpenBSD 5.2/Perl 5.12.2
+            Rate ($#A + 1) scalar @B return @C
+($#A + 1) 7392/s        --      -10%      -20%
+scalar @B 8178/s       11%        --      -12%
+return @C 9284/s       26%       14%        --
 
