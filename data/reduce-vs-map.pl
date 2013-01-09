@@ -13,7 +13,7 @@ sub mapfunction { my $x = 0; map { $x += $_ } @$Data; return $x; }
 is( listutilreduce(), 4950 );
 is( mapfunction(), 4950 );
 
-cmpthese(50000, { 
+cmpthese(90000, { 
 	'reduce' => sub { listutilreduce() }, 
 	'map {}' => sub { mapfunction() }, 
 });
@@ -39,4 +39,14 @@ reduce 22321/s    12%     --
           Rate reduce map {}
 reduce 33113/s     --   -36%
 map {} 51546/s    56%     --
+
+* Mac OS X 10.7.5/Perl 5.14.2
+           Rate reduce map {}
+reduce 113924/s     --   -11%
+map {} 128571/s    13%     --
+
+* OpenBSD 5.2/Perl 5.12.2
+          Rate map {} reduce
+map {} 38462/s     --   -28%
+reduce 53254/s    38%     --
 
