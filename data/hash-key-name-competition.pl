@@ -13,7 +13,7 @@ my $D = 'd';
 
 sub usesq { return $X->{'a'} + $X->{'b'} + $X->{'c'}; }
 sub notsq { return $X->{a} + $X->{b} + $X->{c}; }
-sub usesv { return $X->{$A} + $X->{$B} + $X->{$C}; }
+sub usesv { return $X->{ $A } + $X->{ $B } + $X->{ $C }; }
 sub usedq { return $X->{"a"} + $X->{"b"} + $X->{"c"}; }
 
 is( usesq(), 6 );
@@ -21,11 +21,11 @@ is( notsq(), 6 );
 is( usesv(), 6 );
 is( usedq(), 6 );
 
-cmpthese(500000, { 
-	'Use single quote' => sub { usesq(); },
-	'Not single quote' => sub { notsq(); },
-	'Use scalar value' => sub { usesv(); },
-	'Use double quote' => sub { usedq(); },
+cmpthese(2000000, { 
+	q|Single quote/$x->{'y'}| => sub { usesq(); },
+	q|Single quote/$x->{ y }| => sub { notsq(); },
+	q|Scalar value/$x->{$Y }| => sub { usesv(); },
+	q|Double quote/$x->{"y"}| => sub { usedq(); },
 });
 
 __END__
@@ -58,3 +58,16 @@ Use single quote  980392/s               0%               --              -2%   
 Not single quote 1000000/s               2%               2%               --              -6%
 Use scalar value 1063830/s               9%               9%               6%               --
 
+* Mac OS X 10.7.5/Perl 5.14.2
+                            Rate Scalar value/$x->{$Y } Single quote/$x->{'y'} Single quote/$x->{ y } Double quote/$x->{"y"}
+Scalar value/$x->{$Y } 2040816/s                     --                    -4%                    -7%                    -8%
+Single quote/$x->{'y'} 2127660/s                     4%                     --                    -3%                    -4%
+Single quote/$x->{ y } 2197802/s                     8%                     3%                     --                    -1%
+Double quote/$x->{"y"} 2222222/s                     9%                     4%                     1%                     --
+
+* OpenBSD 5.2/Perl 5.12.2
+                           Rate Scalar value/$x->{$Y } Single quote/$x->{ y } Single quote/$x->{'y'} Double quote/$x->{"y"}
+Scalar value/$x->{$Y } 727273/s                     --                   -16%                   -17%                   -18%
+Single quote/$x->{ y } 862069/s                    19%                     --                    -1%                    -3%
+Single quote/$x->{'y'} 873362/s                    20%                     1%                     --                    -1%
+Double quote/$x->{"y"} 884956/s                    22%                     3%                     1%                     --
