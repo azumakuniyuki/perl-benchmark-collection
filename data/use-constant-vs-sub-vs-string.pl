@@ -7,17 +7,17 @@ my $W = 'STRING';
 use constant X => 'STRING';
 sub Y() { 'STRING' };
 
-sub variable__ { my $w = shift(); return $w.$W.$W.$w; }
-sub constant__ { my $x = shift(); return $x.X.X.$x; }
-sub subroutine { my $y = shift(); return $y.Y.Y.$y; }
-sub stringtext { my $z = shift(); return $z.'STRINGSTRING'.$z; }
+sub variable__ { my $w = shift; return $w.$W.$W.$w; }
+sub constant__ { my $x = shift; return $x.X.X.$x; }
+sub subroutine { my $y = shift; return $y.Y.Y.$y; }
+sub stringtext { my $z = shift; return $z.'STRINGSTRING'.$z; }
 
 is( variable__(1), '1STRINGSTRING1' );
 is( constant__(1), '1STRINGSTRING1' );
 is( subroutine(1), '1STRINGSTRING1' );
 is( stringtext(1), '1STRINGSTRING1' );
 
-cmpthese(500000, { 
+cmpthese(900000, { 
 	'my $variable' => sub { &variable__(2) }, 
 	'use constant' => sub { &constant__(2) }, 
 	'subroutine()' => sub { &subroutine(2) }, 
@@ -54,3 +54,16 @@ subroutine() 877193/s          12%           --          -2%          -5%
 stringstring 892857/s          14%           2%           --          -4%
 use constant 925926/s          19%           6%           4%           --
 
+* Mac OS X 10.7.5/Perl 5.14.2
+                  Rate stringstring subroutine() use constant my $variable
+stringstring 1764706/s           --          -8%         -14%         -18%
+subroutine() 1914894/s           9%           --          -6%         -11%
+use constant 2045455/s          16%           7%           --          -5%
+my $variable 2142857/s          21%          12%           5%           --
+
+* OpenBSD 5.2/Perl 5.12.2
+                 Rate my $variable use constant stringstring subroutine()
+my $variable 708661/s           --          -2%          -6%          -7%
+use constant 720000/s           2%           --          -4%          -6%
+stringstring 750000/s           6%           4%           --          -2%
+subroutine() 762712/s           8%           6%           2%           --
