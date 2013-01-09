@@ -15,7 +15,7 @@ is( usesubstr(), $Text );
 is( useregexp(), $Text );
 is( useunpack(), $Text );
 
-cmpthese(500000, { 
+cmpthese(1600000, { 
 	'substr' => sub { usesubstr() }, 
 	'regexp' => sub { useregexp() }, 
 	'unpack' => sub { useunpack() }, 
@@ -48,3 +48,14 @@ unpack  328947/s     --   -62%   -82%
 regexp  862069/s   162%     --   -53%
 substr 1851852/s   463%   115%     --
 
+* Mac OS X 10.7.5/Perl 5.14.2
+            Rate unpack regexp substr
+unpack  459770/s     --   -64%   -88%
+regexp 1269841/s   176%     --   -66%
+substr 3720930/s   709%   193%     --
+
+* OpenBSD 5.2/Perl 5.12.2
+            Rate unpack regexp substr
+unpack  205656/s     --   -62%   -86%
+regexp  535117/s   160%     --   -64%
+substr 1467890/s   614%   174%     --
