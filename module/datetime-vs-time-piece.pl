@@ -7,10 +7,10 @@ use warnings;
 	package DateT;
 	use DateTime;
 	sub make { 
-		my $c = shift();
-		my $s = shift();
+		my $c = shift;
+		my $s = shift;
 		my $o = DateTime->from_epoch( 'epoch' => $s, 'time_zone' => 'local' ); 
-		return($o);
+		return $o;
 	}
 }
 
@@ -18,10 +18,10 @@ use warnings;
 	package TimeP;
 	use Time::Piece;
 	sub make {
-		my $c = shift();
-		my $s = shift();
+		my $c = shift;
+		my $s = shift;
 		my $o = Time::Piece->new(localtime($s));
-		return($o);
+		return $o;
 	}
 }
 
@@ -32,7 +32,7 @@ use Test::More 'no_plan';
 isa_ok( DateT->make(1), q|DateTime| );
 isa_ok( TimeP->make(1), q|Time::Piece| );
 
-cmpthese(10000, { 
+cmpthese(40000, { 
 	'DateTime' =>    sub { DateT->make( int(rand(1<<24)) ); },
 	'Time::Piece' => sub { TimeP->make( int(rand(1<<24)) ); },
 });
@@ -40,8 +40,11 @@ cmpthese(10000, {
 __END__
 
 * PowerBookG4/perl 5.10.0
-
                Rate    DateTime Time::Piece
 DateTime      296/s          --        -98%
 Time::Piece 12346/s       4067%          --
 
+* Mac OS X 10.7.5/Perl 5.14.2
+               Rate    DateTime Time::Piece
+DateTime     1972/s          --        -97%
+Time::Piece 62500/s       3069%          --
