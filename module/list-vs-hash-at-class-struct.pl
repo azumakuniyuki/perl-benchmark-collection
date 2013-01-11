@@ -4,8 +4,8 @@ use strict;
 use warnings;
 use Benchmark ':all';
 use Test::More 'no_plan';
-#use Devel::Size qw(size total_size);
 use Class::Struct;
+use Devel::Size qw(size total_size);
 
 struct ByList => [
 	'name' => '$',
@@ -27,20 +27,23 @@ struct ByHash => {
 
 sub constructor
 {
-	my $t = shift();
+	my $t = shift;
 	return new $t;
 }
 
 sub set
 {
-	my $s = shift();
-	$s->name('hoge');
-	$s->age(22);
+	my $s = shift;
+	$s->name('azumakuniyuki');
+	$s->age(9);
 	$s->home('Kyoto');
-	$s->cats(0,'mi-chan');
-	$s->cats(1,'tama');
+	$s->cats(0,'Lui');
+	$s->cats(1,'Mei');
+	$s->cats(2,'Aoi');
+	$s->cats(3,'Mari');
 	$s->lang(0,'ja');
 	$s->lang(1,'en');
+	$s->lang(2,'perl');
 	$s->item('pc' => 'PowerBook');
 	$s->item('car' => 'Chrysler');
 	return $s;
@@ -48,74 +51,51 @@ sub set
 
 sub get
 {
-	my $s = shift();
-	return join(':',
-		$s->name(),$s->age(),$s->cats(0),$s->cats(1),
-		$s->lang(0),$s->lang(1),$s->item('pc'),$s->item('car') );
+	my $s = shift;
+	return join( ':', $s->name(), $s->age(), $s->cats(0), $s->cats(1), $s->cats(2), $s->cats(3), 
+			$s->lang(0), $s->lang(1), $s->lang(2), $s->item('pc'), $s->item('car') );
 }
 
-my $lstr = constructor('ByList');
-my $hstr = constructor('ByHash');
+my $list = constructor('ByList');
+my $hash = constructor('ByHash');
 
-isa_ok( set($lstr), q|ByList|, 'set() ByList' );
-isa_ok( set($hstr), q|ByHash|, 'set() ByHash' );
-ok( get($lstr), get($lstr) );
-ok( get($hstr), get($hstr) );
-#ok( Devel::Size::total_size($lstr), 'Class::Struct(@) = '.Devel::Size::total_size($lstr) );
-#ok( Devel::Size::total_size($hstr), 'Class::Struct(%) = '.Devel::Size::total_size($hstr) );
+isa_ok( set($list), 'ByList', 'set() ByList' );
+isa_ok( set($hash), 'ByHash', 'set() ByHash' );
+ok( get($list), get($list) );
+ok( get($hash), get($hash) );
+ok( Devel::Size::total_size($list), 'Class::Struct(@) = '.Devel::Size::total_size($list) );
+ok( Devel::Size::total_size($hash), 'Class::Struct(%) = '.Devel::Size::total_size($hash) );
 
-cmpthese(50000, { 
+cmpthese(160000, { 
 	'Class::Struct(@)->new' => sub { constructor('ByList'); },
 	'Class::Struct(%)->new' => sub { constructor('ByHash'); },
 });
 
-$lstr = constructor('ByList');
-$hstr = constructor('ByHash');
+$list = constructor('ByList');
+$hash = constructor('ByHash');
 
-cmpthese(50000, { 
-	'Class::Struct(@)->set' => sub { set($lstr); },
-	'Class::Struct(%)->set' => sub { set($hstr); },
+cmpthese(90000, { 
+	'Class::Struct(@)->set' => sub { set($list); },
+	'Class::Struct(%)->set' => sub { set($hash); },
 });
 
-cmpthese(50000, { 
-	'Class::Struct(@)->get' => sub { get($lstr); },
-	'Class::Struct(%)->get' => sub { get($hstr); },
+cmpthese(90000, { 
+	'Class::Struct(@)->get' => sub { get($list); },
+	'Class::Struct(%)->get' => sub { get($hash); },
 });
 
 __END__
 
-* PowerBookG4/perl 5.8.8
-                         Rate Class::Struct(%)->new Class::Struct(@)->new
-Class::Struct(%)->new 69444/s                    --                   -6%
-Class::Struct(@)->new 73529/s                    6%                    --
+* Mac OS X 10.7.5/Perl 5.14.2
+ok 5 - Class::Struct(@) = 1257
+ok 6 - Class::Struct(%) = 1684
+                          Rate Class::Struct(@)->new Class::Struct(%)->new
+Class::Struct(@)->new 222222/s                    --                  -11%
+Class::Struct(%)->new 250000/s                   13%                    --
                          Rate Class::Struct(%)->set Class::Struct(@)->set
-Class::Struct(%)->set 34483/s                    --                   -4%
-Class::Struct(@)->set 35971/s                    4%                    --
-                         Rate Class::Struct(%)->get Class::Struct(@)->get
-Class::Struct(%)->get 30303/s                    --                   -4%
-Class::Struct(@)->get 31646/s                    4%                    --
-
-
-* PowerBookG4/perl 5.10.0
-                         Rate Class::Struct(%)->new Class::Struct(@)->new
-Class::Struct(%)->new 46729/s                    --                   -2%
-Class::Struct(@)->new 47619/s                    2%                    --
-                         Rate Class::Struct(%)->set Class::Struct(@)->set
-Class::Struct(%)->set 27624/s                    --                   -5%
-Class::Struct(@)->set 29070/s                    5%                    --
-                         Rate Class::Struct(%)->get Class::Struct(@)->get
-Class::Struct(%)->get 22422/s                    --                   -3%
-Class::Struct(@)->get 23041/s                    3%                    --
-
-
-* PowerBookG4/perl 5.12.0
-                         Rate Class::Struct(@)->new Class::Struct(%)->new
-Class::Struct(@)->new 60976/s                    --                   -1%
-Class::Struct(%)->new 61728/s                    1%                    --
-                         Rate Class::Struct(%)->set Class::Struct(@)->set
-Class::Struct(%)->set 28736/s                    --                   -1%
-Class::Struct(@)->set 28902/s                    1%                    --
+Class::Struct(%)->set 80357/s                    --                  -12%
+Class::Struct(@)->set 91837/s                   14%                    --
                          Rate Class::Struct(@)->get Class::Struct(%)->get
-Class::Struct(@)->get 26455/s                    --                   -1%
-Class::Struct(%)->get 26596/s                    1%                    --
+Class::Struct(@)->get 73171/s                    --                   -1%
+Class::Struct(%)->get 73770/s                    1%                    --
 
