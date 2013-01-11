@@ -11,14 +11,14 @@ sub backslash
 { 
 	my $x = shift();
 	my $r = qr{\Apostmaster\@test\.of\.sub\.domain\.example\.jp\z};
-	return(1) if( $x =~ $r );
+	return 1 if $x =~ $r;
 }
 
 sub squarebracket
 {
 	my $x = shift();
 	my $r = qr{\Apostmaster[@]test[.]of[.]sub[.]domain[.]example[.]jp\z};
-	return(1) if( $x =~ $r );
+	return 1 if $x =~ $r;
 }
 
 ok( backslash($X) );
@@ -51,4 +51,13 @@ Square Bracket[.] 118343/s                5%                --
 Backslash(\.)     350877/s                --               -4%
 Square Bracket[.] 363636/s                4%                --
 
+* Mac OS X 10.7.5/Perl 5.14.2
+                      Rate     Backslash(\.) Square Bracket[.]
+Backslash(\.)     370370/s                --               -4%
+Square Bracket[.] 384615/s                4%                --
+
+* OpenBSD 5.2/Perl 5.12.2
+                      Rate     Backslash(\.) Square Bracket[.]
+Backslash(\.)     147059/s                --               -1%
+Square Bracket[.] 148148/s                1%                --
 
