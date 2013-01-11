@@ -12,14 +12,14 @@ sub docapture
 { 
 	my $x = shift();
 	my $r = qr{\Aexample[.](com|net|org|int|jp)\z};
-	return(1) if( $x =~ $r );
+	return 1 if $x =~ $r;
 }
 
 sub grouponly
 {
 	my $x = shift();
 	my $r = qr{\Aexample[.](?:com|net|org|int|jp)\z};
-	return(1) if( $x =~ $r );
+	return 1 if $x =~ $r;
 }
 
 ok( docapture($X) );
@@ -52,3 +52,12 @@ Group Only 99010/s         7%         --
 Do Capture 152672/s         --       -11%
 Group Only 172414/s        13%         --
 
+* Mac OS X 10.7.5/Perl 5.14.2
+               Rate Do Capture Group Only
+Do Capture 333333/s         --       -10%
+Group Only 370370/s        11%         --
+
+* OpenBSD 5.2/Perl 5.12.2
+               Rate Do Capture Group Only
+Do Capture 111732/s         --       -11%
+Group Only 125000/s        12%         --
