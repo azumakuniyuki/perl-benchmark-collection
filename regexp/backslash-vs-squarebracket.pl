@@ -61,3 +61,8 @@ Square Bracket[.] 384615/s                4%                --
 Backslash(\.)     147059/s                --               -1%
 Square Bracket[.] 148148/s                1%                --
 
+* Mac OS X 10.9.5/Perl 5.20.1
+                      Rate     Backslash(\.) Square Bracket[.]
+Backslash(\.)     370370/s                --               -6%
+Square Bracket[.] 392157/s                6%                --
+1..2
