@@ -152,6 +152,7 @@
   - regexp/pipeline-vs-grep.pl
     - $x =~ m/(?:x|y|z)/
     - grep { $x =~ $_ } @y;
+    - grep { $x eq $_ } @y;
 
 ----
 ### statement
