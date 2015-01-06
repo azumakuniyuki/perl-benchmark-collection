@@ -149,6 +149,9 @@
   - regexp/pipeline-vs-3times.pl
     - $x =~ m/(?:x|y|z)/
     - $x =~ m/x/; $x =~ m/y/; $x =~ m/z/;
+  - regexp/pipeline-vs-grep.pl
+    - $x =~ m/(?:x|y|z)/
+    - grep { $x =~ $_ } @y;
 
 ----
 ### statement
