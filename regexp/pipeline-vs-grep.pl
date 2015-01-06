@@ -16,6 +16,12 @@ my $String0 = 'From: shironeko@example.jp'."\n".
               'Reply-To: kijitora@example.org'."\n".
               'Errors-To: neko@example.co.jp'."\n";
 
+my $RxPipe1 = qr/\A(?:From|Return-Path|Reply-To|Errors-To)\z/;
+my $RxList1 = [ 'From', 'Return-Path', 'Reply-To', 'Errors-To' ];
+my $String1 = 'Reply-To';
+
+sub rxpipe1 { return 1 if $String1 =~ $RxPipe1 }
+sub rxlist1 { return 1 if grep { $String1 eq $_ } @{ $RxList1 } }
 sub rxpipe2 { return 1 if $String0 =~ $RxPipe2 }
 sub rxlist2 { return 1 if grep { $String0 =~ $_ } @{ $RxList2 } }
 sub rxpipe3 { return 1 if $String0 =~ $RxPipe3 }
@@ -23,6 +29,8 @@ sub rxlist3 { return 1 if grep { $String0 =~ $_ } @{ $RxList3 } }
 sub rxpipe4 { return 1 if $String0 =~ $RxPipe4 }
 sub rxlist4 { return 1 if grep { $String0 =~ $_ } @{ $RxList4 } }
 
+ok( rxpipe1() );
+ok( rxlist1() );
 ok( rxpipe2() );
 ok( rxlist2() );
 ok( rxpipe3() );
@@ -30,6 +38,11 @@ ok( rxlist3() );
 ok( rxpipe4() );
 ok( rxlist4() );
 
+cmpthese(1200000, { 
+    'Pipe1(m/(?:.../)' => sub { &rxpipe1() }, 
+    'List1(grep{...})' => sub { &rxlist1() }, 
+});
+print "\n";
 cmpthese(1200000, { 
     'Pipe2(m/(?:.../)' => sub { &rxpipe2() }, 
     'List2(grep{...})' => sub { &rxlist2() }, 
@@ -48,6 +61,10 @@ cmpthese(1200000, {
 __END__
 
 * Mac OS X 10.9.5/Perl 5.20.1
+                      Rate Pipe1(m/(?:.../) List1(grep{...})
+Pipe1(m/(?:.../)  794702/s               --             -59%
+List1(grep{...}) 1935484/s             144%               --
+
                      Rate List2(grep{...}) Pipe2(m/(?:.../)
 List2(grep{...}) 352941/s               --             -60%
 Pipe2(m/(?:.../) 888889/s             152%               --
@@ -62,6 +79,10 @@ Pipe4(m/(?:.../) 769231/s             285%               --
 
 
 * OpenBSD 5.4/Perl 5.16.3
+                     Rate Pipe1(m/(?:.../) List1(grep{...})
+Pipe1(m/(?:.../) 404040/s               --             -24%
+List1(grep{...}) 528634/s              31%               --
+
                      Rate List2(grep{...}) Pipe2(m/(?:.../)
 List2(grep{...}) 115053/s               --             -70%
 Pipe2(m/(?:.../) 377358/s             228%               --
