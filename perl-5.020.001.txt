@@ -1,0 +1,49 @@
+Summary of my perl5 (revision 5 version 20 subversion 1) configuration:
+   
+  Platform:
+    osname=darwin, osvers=13.4.0, archname=darwin-2level
+    uname='darwin saburokaneie2706.local 13.4.0 darwin kernel version 13.4.0: sun aug 17 19:50:11 pdt 2014; root:xnu-2422.115.4~1release_x86_64 x86_64 '
+    config_args='-des -Dprefix=/usr/local'
+    hint=recommended, useposix=true, d_sigaction=define
+    useithreads=undef, usemultiplicity=undef
+    use64bitint=define, use64bitall=define, uselongdouble=undef
+    usemymalloc=n, bincompat5005=undef
+  Compiler:
+    cc='cc', ccflags ='-fno-common -DPERL_DARWIN -fno-strict-aliasing -pipe -fstack-protector -I/usr/local/include',
+    optimize='-O3',
+    cppflags='-fno-common -DPERL_DARWIN -fno-strict-aliasing -pipe -fstack-protector -I/usr/local/include'
+    ccversion='', gccversion='4.2.1 Compatible Apple LLVM 6.0 (clang-600.0.56)', gccosandvers=''
+    intsize=4, longsize=8, ptrsize=8, doublesize=8, byteorder=12345678
+    d_longlong=define, longlongsize=8, d_longdbl=define, longdblsize=16
+    ivtype='long', ivsize=8, nvtype='double', nvsize=8, Off_t='off_t', lseeksize=8
+    alignbytes=8, prototype=define
+  Linker and Libraries:
+    ld='env MACOSX_DEPLOYMENT_TARGET=10.3 cc', ldflags =' -fstack-protector -L/usr/local/lib'
+    libpth=/usr/local/lib /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/6.0/lib /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib /usr/lib
+    libs=-ldbm -ldl -lm -lutil -lc
+    perllibs=-ldl -lm -lutil -lc
+    libc=, so=dylib, useshrplib=false, libperl=libperl.a
+    gnulibc_version=''
+  Dynamic Linking:
+    dlsrc=dl_dlopen.xs, dlext=bundle, d_dlsymun=undef, ccdlflags=' '
+    cccdlflags=' ', lddlflags=' -bundle -undefined dynamic_lookup -L/usr/local/lib -fstack-protector'
+
+
+Characteristics of this binary (from libperl): 
+  Compile-time options: HAS_TIMES PERLIO_LAYERS PERL_DONT_CREATE_GVSV
+                        PERL_HASH_FUNC_ONE_AT_A_TIME_HARD PERL_MALLOC_WRAP
+                        PERL_NEW_COPY_ON_WRITE PERL_PRESERVE_IVUV
+                        USE_64_BIT_ALL USE_64_BIT_INT USE_LARGE_FILES
+                        USE_LOCALE USE_LOCALE_COLLATE USE_LOCALE_CTYPE
+                        USE_LOCALE_NUMERIC USE_PERLIO USE_PERL_ATOF
+  Built under darwin
+  Compiled at Dec  4 2014 15:26:52
+  %ENV:
+    PERL_BADLANG="0"
+  @INC:
+    /usr/local/lib/perl5/site_perl/5.20.1/darwin-2level
+    /usr/local/lib/perl5/site_perl/5.20.1
+    /usr/local/lib/perl5/5.20.1/darwin-2level
+    /usr/local/lib/perl5/5.20.1
+    /usr/local/lib/perl5/site_perl
+    .
