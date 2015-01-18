@@ -22,13 +22,20 @@ is( usesv(), 6 );
 is( usedq(), 6 );
 
 cmpthese(2000000, { 
-	q|Single quote/$x->{'y'}| => sub { usesq(); },
-	q|Single quote/$x->{ y }| => sub { notsq(); },
-	q|Scalar value/$x->{$Y }| => sub { usesv(); },
-	q|Double quote/$x->{"y"}| => sub { usedq(); },
+    q|Single quote/$x->{'y'}| => sub { usesq(); },
+    q|Single quote/$x->{ y }| => sub { notsq(); },
+    q|Scalar value/$x->{$Y }| => sub { usesv(); },
+    q|Double quote/$x->{"y"}| => sub { usedq(); },
 });
 
 __END__
+
+* Mac OS X 10.9.5/Perl 5.20.1
+                            Rate Scalar value/$x->{$Y } Single quote/$x->{ y } Double quote/$x->{"y"} Single quote/$x->{'y'}
+Scalar value/$x->{$Y } 2000000/s                     --                   -20%                   -22%                   -24%
+Single quote/$x->{ y } 2500000/s                    25%                     --                    -2%                    -5%
+Double quote/$x->{"y"} 2564103/s                    28%                     3%                     --                    -3%
+Single quote/$x->{'y'} 2631579/s                    32%                     5%                     3%                     --
 
 * PowerBookG4/perl 5.8.8
                      Rate Use double quote Use single quote Not single quote Use scalar value

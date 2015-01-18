@@ -6,34 +6,29 @@ use Benchmark ':all';
 use Test::More 'no_plan';
 
 my @Data = ( 0..99 );
-sub useforeach
-{
-	my $x = shift;
-	foreach my $y ( @$x )
-	{
-		$y = int sqrt($y);
-	}
+
+sub useforeach {
+    my $x = shift;
+    foreach my $y ( @$x ) {
+        $y = int sqrt($y);
+    }
 }
 
-sub useforloop
-{
-	my $x = shift;
-	for my $y ( @$x )
-	{
-		$y = int sqrt($y);
-	}
+sub useforloop {
+    my $x = shift;
+    for my $y ( @$x ) {
+        $y = int sqrt($y);
+    }
 }
 
-sub usemapfunc1
-{
-	my $x = shift;
-	@$x = map { int sqrt($_) } @$x;
+sub usemapfunc1 {
+    my $x = shift;
+    @$x = map { int sqrt($_) } @$x;
 }
 
-sub usemapfunc2
-{
-	my $x = shift;
-	map { $_ = int sqrt($_) } @$x;
+sub usemapfunc2 {
+    my $x = shift;
+    map { $_ = int sqrt($_) } @$x;
 }
 
 my @W = @Data; useforeach(\@W);
@@ -47,13 +42,20 @@ is( $Y[-1], 9 ); @Y = @Data;
 is( $Z[-1], 9 ); @Z = @Data;
 
 cmpthese(50000, { 
-	'foreach my $x' => sub { &useforeach( \@W ) },
-	'for my $x(..)' => sub { &useforloop( \@X ) }, 
-	'@x = map {..}' => sub { &usemapfunc1( \@Y ) }, 
-	'map { $_ = .}' => sub { &usemapfunc2( \@Z ) }, 
+    'foreach my $x' => sub { &useforeach( \@W ) },
+    'for my $x(..)' => sub { &useforloop( \@X ) }, 
+    '@x = map {..}' => sub { &usemapfunc1( \@Y ) }, 
+    'map { $_ = .}' => sub { &usemapfunc2( \@Z ) }, 
 });
 
 __END__
+
+* Mac OS X 10.9.5/Perl 5.20.1
+                 Rate @x = map {..} map { $_ = .} for my $x(..) foreach my $x
+@x = map {..} 32680/s            --          -15%          -65%          -65%
+map { $_ = .} 38462/s           18%            --          -58%          -59%
+for my $x(..) 92593/s          183%          141%            --           -2%
+foreach my $x 94340/s          189%          145%            2%            --
 
 * PowerBookG4/perl 5.8.8
                  Rate @x = map{...} map{$_ = ...} for my $x(..) foreach my $x

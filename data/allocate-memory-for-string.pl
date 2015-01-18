@@ -6,17 +6,27 @@ use Benchmark ':all';
 
 my $STRING = '.' x ( 1 << 16 );
 
-cmpthese(200000, { 
-	'Allocation1' => sub { my $v = ' ' x ( 1 << 18 ); $v = $STRING; },
-	'Allocation2' => sub { my $v = ' ' x ( 1 << 16 ); $v = $STRING; },
-	'Allocation3' => sub { my $v = ' ' x ( 1 <<  8 ); $v = $STRING; },
-	'Allocation4' => sub { my $v = ' ' x ( 1 <<  4 ); $v = $STRING; },
-	'Allocation5' => sub { my $v = ' ' x ( 1 <<  1 ); $v = $STRING; },
-	'Allocation6' => sub { my $v = ' ' x ( 1 <<  0 ); $v = $STRING; },
-	'Expansion'   => sub { my $v = undef;             $v = $STRING; },
+cmpthese(800000, { 
+    'Allocation1' => sub { my $v = ' ' x ( 1 << 18 ); $v = $STRING; },
+    'Allocation2' => sub { my $v = ' ' x ( 1 << 16 ); $v = $STRING; },
+    'Allocation3' => sub { my $v = ' ' x ( 1 <<  8 ); $v = $STRING; },
+    'Allocation4' => sub { my $v = ' ' x ( 1 <<  4 ); $v = $STRING; },
+    'Allocation5' => sub { my $v = ' ' x ( 1 <<  1 ); $v = $STRING; },
+    'Allocation6' => sub { my $v = ' ' x ( 1 <<  0 ); $v = $STRING; },
+    'Expansion'   => sub { my $v = undef;             $v = $STRING; },
 });
 
 __END__
+
+* Mac OS X 10.9.5/Perl 5.20.1
+                 Rate Allocation1 Allocation2 Allocation3 Allocation5 Allocation6 Allocation4 Expansion
+Allocation1   40465/s          --        -86%        -99%        -99%        -99%        -99%      -99%
+Allocation2  282686/s        599%          --        -90%        -93%        -93%        -93%      -96%
+Allocation3 2857143/s       6961%        911%          --        -29%        -32%        -32%      -57%
+Allocation5 4000000/s       9785%       1315%         40%          --         -5%         -5%      -40%
+Allocation6 4210526/s      10305%       1389%         47%          5%          --          0%      -37%
+Allocation4 4210526/s      10305%       1389%         47%          5%          0%          --      -37%
+Expansion   6666667/s      16375%       2258%        133%         67%         58%         58%        --
 
 * Mac OS X 10.7.5/Perl 5.14.2
                 Rate Allocation1 Allocation2 Allocation3 Allocation4 Allocation6 Allocation5 Expansion

@@ -18,12 +18,18 @@ is( usereturn(0), 1 );
 
 my @Z = ( 1 .. 100 );
 cmpthese( 70000, { 
-	'($#A + 1)' => sub { &dollsharp($_) for @Z; },
-	'scalar @B' => sub { &usescalar($_) for @Z; },
-	'return @C' => sub { &usereturn($_) for @Z; },
+    '($#A + 1)' => sub { &dollsharp($_) for @Z; },
+    'scalar @B' => sub { &usescalar($_) for @Z; },
+    'return @C' => sub { &usereturn($_) for @Z; },
 });
 
 __END__
+
+* Mac OS X 10.9.5/Perl 5.20.1
+             Rate ($#A + 1) scalar @B return @C
+($#A + 1) 25641/s        --      -11%      -20%
+scalar @B 28807/s       12%        --      -10%
+return @C 31963/s       25%       11%        --
 
 * PowerBookG5/perl 5.8.8
             Rate ($#A + 1) scalar @B return @C

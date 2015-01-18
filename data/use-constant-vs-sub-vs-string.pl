@@ -17,14 +17,22 @@ is( constant__(1), '1STRINGSTRING1' );
 is( subroutine(1), '1STRINGSTRING1' );
 is( stringtext(1), '1STRINGSTRING1' );
 
-cmpthese(900000, { 
-	'my $variable' => sub { &variable__(2) }, 
-	'use constant' => sub { &constant__(2) }, 
-	'subroutine()' => sub { &subroutine(2) }, 
-	'stringstring' => sub { &subroutine(2) }, 
+cmpthese(1200000, { 
+    'my $variable' => sub { &variable__(2) }, 
+    'use constant' => sub { &constant__(2) }, 
+    'subroutine()' => sub { &subroutine(2) }, 
+    'stringstring' => sub { &subroutine(2) }, 
 });
 
 __END__
+
+
+* Mac OS X 10.9.5/Perl 5.20.1
+                  Rate stringstring use constant subroutine() my $variable
+stringstring 2448980/s           --          -0%          -2%          -4%
+use constant 2448980/s           0%           --          -2%          -4%
+subroutine() 2500000/s           2%           2%           --          -2%
+my $variable 2553191/s           4%           4%           2%           --
 
 * PowerBookG4/Perl 5.8.8
                  Rate use constant my $variable subroutine() stringstring

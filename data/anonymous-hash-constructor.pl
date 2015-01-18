@@ -5,31 +5,36 @@ use warnings;
 use Benchmark ':all';
 use Test::More 'no_plan';
 
-sub plusbrace
-{ 
-	my $x = shift; 
-	my $y = +{ 'x' => $x }; 
-	my $z = +{ 'z' => $y->{'x'} };
-	return +{ 'y' => ( $y->{'x'} + $z->{'z'} ) };
+sub plusbrace { 
+    my $x = shift; 
+    my $y = +{ 'x' => $x }; 
+    my $z = +{ 'z' => $y->{'x'} };
+
+    return +{ 'y' => ( $y->{'x'} + $z->{'z'} ) };
 }
 
-sub braceonly
-{ 
-	my $x = shift; 
-	my $y = { 'x' => $x }; 
-	my $z = { 'z' => $y->{'x'} };
-	return { 'y' => ( $y->{'x'} + $z->{'z'} ) };
+sub braceonly { 
+    my $x = shift; 
+    my $y = { 'x' => $x }; 
+    my $z = { 'z' => $y->{'x'} };
+
+    return { 'y' => ( $y->{'x'} + $z->{'z'} ) };
 }
 
-isa_ok( plusbrace(1), q|HASH| );
-isa_ok( braceonly(1), q|HASH| );
+isa_ok( plusbrace(1), 'HASH' );
+isa_ok( braceonly(1), 'HASH' );
 
 cmpthese(500000, { 
-	'+{}' => sub { &plusbrace(1) }, 
-	' {}' => sub { &braceonly(1) }, 
+    '+{}' => sub { &plusbrace(1) }, 
+    ' {}' => sub { &braceonly(1) }, 
 });
 
 __END__
+
+* Mac OS X 10.9.5/Perl 5.20.1
+        Rate +{}  {}
++{} 467290/s  -- -2%
+ {} 476190/s  2%  --
 
 * PowerBookG4/perl 5.8.8
         Rate +{}  {}
