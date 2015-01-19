@@ -7,28 +7,40 @@ use Test::More 'no_plan';
 
 my $email = 'postmaster@example.jp';
 
-sub gethostbysplit
-{
-	my $x = shift;
-	return [ split( '@', $x ) ]->[1];
+sub gethostbysplit1 {
+    my $x = shift;
+    return [ split( '@', $x ) ]->[1];
 }
 
-sub gethostbyregex
-{
-	my $x = shift;
-	return $1 if $x =~ m{[@](.+)\z};
+sub gethostbysplit2 {
+    my $x = shift;
+    my @y = split( '@', $x );
+    return $y[-1];
 }
 
-is( gethostbysplit($email), 'example.jp' );
+sub gethostbyregex {
+    my $x = shift;
+    return $1 if $x =~ m{[@](.+)\z};
+}
+
+is( gethostbysplit1($email), 'example.jp' );
+is( gethostbysplit2($email), 'example.jp' );
 is( gethostbyregex($email), 'example.jp' );
 
 cmpthese(500000, { 
-	'split' => sub { gethostbysplit($email); }, 
-	'regex' => sub { gethostbyregex($email); }, 
+    'split1' => sub { gethostbysplit1($email); }, 
+    'split2' => sub { gethostbysplit2($email); }, 
+    'regex' => sub { gethostbyregex($email); }, 
 });
 
 
 __END__
+
+* Mac OS X 10.9.5/Perl 5.20.1
+            Rate split1 split2  regex
+split1  769231/s     --    -9%   -37%
+split2  847458/s    10%     --   -31%
+regex  1219512/s    59%    44%     --
 
 * PowerBookG5/perl 5.8.8
           Rate split regex
