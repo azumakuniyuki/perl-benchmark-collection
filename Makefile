@@ -42,4 +42,7 @@ distclean:
 		cd ../; \
 	done
 
-
+push:
+	for G in github; do \
+		git push --tags $$G master; \
+	done
