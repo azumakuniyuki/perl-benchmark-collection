@@ -7,26 +7,24 @@ use Test::More 'no_plan';
 
 my $X = 'postmaster@test.of.sub.domain.example.jp';
 
-sub backslash
-{ 
-	my $x = shift();
-	my $r = qr{\Apostmaster\@test\.of\.sub\.domain\.example\.jp\z};
-	return 1 if $x =~ $r;
+sub backslash { 
+    my $x = shift;
+    my $r = qr/\Apostmaster\@test\.of\.sub\.domain\.example\.jp\z/;
+    return 1 if $x =~ $r;
 }
 
-sub squarebracket
-{
-	my $x = shift();
-	my $r = qr{\Apostmaster[@]test[.]of[.]sub[.]domain[.]example[.]jp\z};
-	return 1 if $x =~ $r;
+sub squarebracket {
+    my $x = shift;
+    my $r = qr/\Apostmaster[@]test[.]of[.]sub[.]domain[.]example[.]jp\z/;
+    return 1 if $x =~ $r;
 }
 
 ok( backslash($X) );
 ok( squarebracket($X) );
 
 cmpthese(200000, { 
-	'Backslash(\.)' => sub { &backslash($X) }, 
-	'Square Bracket[.]' => sub { &squarebracket($X) }, 
+    'Backslash(\.)' => sub { &backslash($X) }, 
+    'Square Bracket[.]' => sub { &squarebracket($X) }, 
 });
 
 __END__
