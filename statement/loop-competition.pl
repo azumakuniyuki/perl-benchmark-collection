@@ -11,42 +11,38 @@ my @Y = ( 1 .. (1<<10) );
 my @Z = ( 1 .. (1<<10) );
 my $R = 146;
 
-sub usegrep
-{
-	my $x = 0;
-	$x = grep { $_ % 7 == 0 } @W;
-	return $x;
+sub usegrep {
+    my $x = 0;
+    $x = grep { $_ % 7 == 0 } @W;
+    return $x;
 }
 
-sub useforloop
-{
-	my $x = 0;
-	my $n = scalar @X;
-	for( my $y = 0; $y < $n; $y++ )
-	{
-		$x++ unless $X[$y] % 7;
-	}
-	return $x;
+sub useforloop {
+    my $x = 0;
+    my $n = scalar @X;
+
+    for( my $y = 0; $y < $n; $y++ ) {
+        $x++ unless $X[$y] % 7;
+    }
+    return $x;
 }
 
-sub useforeach
-{
-	my $x = 0;
-	foreach my $y ( @Y )
-	{
-		$x++ unless $y % 7;
-	}
-	return $x;
+sub useforeach {
+    my $x = 0;
+
+    foreach my $y ( @Y ) {
+        $x++ unless $y % 7;
+    }
+    return $x;
 }
 
-sub usewhile
-{
-	my $x = 0;
-	while( my $y = shift @Z )
-	{
-		$x++ unless $y % 7;
-	}
-	return $x;
+sub usewhile {
+    my $x = 0;
+
+    while( my $y = shift @Z ) {
+        $x++ unless $y % 7;
+    }
+    return $x;
 }
 
 is( usegrep(), $R, 'grep {}' );
@@ -55,13 +51,22 @@ is( useforeach(), $R, 'foreach()' );
 is( usewhile(), $R, 'while()' );
 
 cmpthese( 180000, {
-	'grep {}' => \&usegrep,
-	'for()'	=> \&useforloop,
-	'foreach()' => \&useforeach,
-	'while()' => \&usewhile,
+    'grep {}' => \&usegrep,
+    'for()' => \&useforloop,
+    'foreach()' => \&useforeach,
+    'while()' => \&usewhile,
 });
 
 __END__
+
+
+* Mac OS X 10.9.5/Perl 5.20.1
+            (warning: too few iterations for a reliable count)
+               Rate     for()   grep {} foreach()   while()
+for()        6550/s        --      -36%      -37%     -100%
+grep {}     10303/s       57%        --       -1%      -99%
+foreach()   10363/s       58%        1%        --      -99%
+while()   2000000/s    30433%    19311%    19200%        --
 
 * Mac OS X 10.7.5/Perl 5.14.2
             (warning: too few iterations for a reliable count)
