@@ -6,31 +6,34 @@ use Benchmark ':all';
 use Test::More 'no_plan';
 
 my $L = [ 0..1023 ];
-sub usepopfunc
-{ 
-	my @x = @$L;
-	my $y = pop @x;
-	$y += pop @x;
-	return $y;
+sub usepopfunc { 
+    my @x = @$L;
+    my $y = pop @x;
+    $y += pop @x;
+    return $y;
 }
 
-sub splicefunc
-{ 
-	my @x = @$L;
-	my $y = splice(@x,-1);
-	$y += splice(@x,-1); 
-	return $y;
+sub splicefunc { 
+    my @x = @$L;
+    my $y = splice(@x,-1);
+    $y += splice(@x,-1); 
+    return $y;
 }
 
 is( usepopfunc(), 2045 );
 is( splicefunc(), 2045 );
 
 cmpthese(100000, { 
-	'pop @x' => sub { usepopfunc() }, 
-	'splice' => sub { splicefunc() }, 
+    'pop @x' => sub { usepopfunc() }, 
+    'splice' => sub { splicefunc() }, 
 });
 
 __END__
+
+* Mac OS X 10.9.5/Perl 5.20.1
+          Rate splice pop @x
+splice 19268/s     --    -4%
+pop @x 20040/s     4%     --
 
 * Mac OS X 10.7.5/Perl 5.14.2
           Rate pop @x splice
