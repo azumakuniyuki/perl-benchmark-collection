@@ -12,6 +12,9 @@ RUNPERL = perl -I./lib/perl5
 BMSDIRS = data function module operator regexp statement
 
 .PHONY: clean
+git-status:
+	git status
+
 env:
 	@for x in $(SUBDIRS); \
 	do \
