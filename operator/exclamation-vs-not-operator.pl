@@ -12,11 +12,16 @@ ok( exclamation(0) );
 ok( notoperator(0) );
 
 cmpthese(1500000, { 
-	'! $_' => sub { &exclamation(0) }, 
-	'not $_' => sub { &notoperator(0) }, 
+    '! $_' => sub { &exclamation(0) }, 
+    'not $_' => sub { &notoperator(0) }, 
 });
 
 __END__
+
+* Mac OS X 10.9.5/Perl 5.20.1
+            Rate not $_   ! $_
+not $_ 3191489/s     --    -0%
+! $_   3191489/s     0%     --
 
 * PowerBookG4/perl 5.8.8
            Rate not $_   ! $_

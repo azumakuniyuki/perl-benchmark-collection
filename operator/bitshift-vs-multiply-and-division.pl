@@ -6,35 +6,40 @@ use Benchmark ':all';
 use Test::More 'no_plan';
 
 sub bitshift {
-	my $x = shift;
-	$x = $x << 1;
-	$x = $x >> 1;
-	$x = $x << 1;
-	$x = $x << 1;
-	$x = $x << 1;
-	return $x;
+    my $x = shift;
+    $x = $x << 1;
+    $x = $x >> 1;
+    $x = $x << 1;
+    $x = $x << 1;
+    $x = $x << 1;
+    return $x;
 }
 
 sub mltpldiv {
-	my $x = shift;
-	$x *= 2;
-	$x /= 2;
-	$x *= 2;
-	$x *= 2;
-	$x *= 2;
-	return $x;
+    my $x = shift;
+    $x *= 2;
+    $x /= 2;
+    $x *= 2;
+    $x *= 2;
+    $x *= 2;
+    return $x;
 }
 
 is( bitshift(1), 8 );
 is( mltpldiv(1), 8 );
 
 cmpthese( 900000, { 
-		'<<, >>' => sub { bitshift(1); },
-		'*2, /2' => sub { mltpldiv(1); },
-	}
+        '<<, >>' => sub { bitshift(1); },
+        '*2, /2' => sub { mltpldiv(1); },
+    }
 );
 
 __END__
+
+* Mac OS X 10.9.5/Perl 5.20.1
+            Rate *2, /2 <<, >>
+*2, /2 2000000/s     --    -4%
+<<, >> 2093023/s     5%     --
 
 * MacBook Air/Mac OS X 10.7.5/Perl 5.14.2
             Rate *2, /2 <<, >>
