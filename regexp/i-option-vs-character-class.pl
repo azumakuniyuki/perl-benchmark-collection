@@ -5,41 +5,52 @@ use warnings;
 use Benchmark ':all';
 use Test::More 'no_plan';
 
-my $X = 'Fwd: Neko nyaaaaan!!! ShiroNeko Nyanko Nyan Nyan Nyaaaan';
+my $U = 'Arrival-Date: Wed, 29 Apr 2009 16:03:18 +0900';
+my $V = 'Status: 5.1.1';
+my $W = 'Received-From-MTA: DNS; x1x2x3x4.dhcp.example.ne.jp';
+my $X = 'Final-Recipient: RFC822; userunknown@example.jp';
+my $Y = 'X-Actual-Recipient: RFC822; kijitora@example.co.jp';
+my $Z = 'Diagnostic-Code: SMTP; 550 5.1.1 <userunknown@example.jp>... User Unknown';
 
 sub ignore_case { 
-    my $x = shift;
-    my $y = 0;
+    my $v = 0;
 
-    $y++ if $x =~ m/\A\s*Fwd?:/i;
-    $y++ if $x =~ m/Neko Nyaaaaa/i;
-    $y++ if $x =~ m/shironeko nyanko/i;
-    return $y;
+    $v++ if $U =~ m/\AArrival-Date:[ ]*.+\z/i;
+    $v++ if $V =~ m/\AStatus: \d[.]\d[.]\d\z/i;
+    $v++ if $W =~ m/\AReceived-From-MTA:[ ]*DNS;[ ]*.+\z/i;
+    $v++ if $X =~ m/\AFinal-Recipient:[ ]*RFC822;[ ]*[^ ]+\z/i;
+    $v++ if $Y =~ m/\AX-Actual-Recipient:[ ]*RFC822;[ ]*[^ ]+\z/i;
+    $v++ if $Z =~ m/\ADiagnostic-Code:[ ]*.+?;[ ]*.+\z/i;
+    return $v;
 }
 
 sub char_class {
-    my $x = shift;
-    my $y = 0;
+    my $v = 0;
 
-    $y++ if $x =~ m/\A\s*[Ff][Ww][Dd]?:/;
-    $y++ if $x =~ m/[Nn]eko [Nn]yaaaaa/;
-    $y++ if $x =~ m/[Ss]hiro[Nn]eko [Nn]yanko/;
-    return $y;
+    $v++ if $U =~ m/\A[Aa]rrival-[Dd]ate:[ ]*.+\z/;
+    $v++ if $V =~ m/\A[Ss]tatus: \d[.]\d[.]\d\z/;
+    $v++ if $W =~ m/\A[Rr]eceived-[Ff]rom-MTA:[ ]*(?:DNS|dns);[ ]*.+\z/;
+    $v++ if $X =~ m/\A[Ff]inal-[Rr]ecipient:[ ]*(?:RFC|rfc)822;[ ]*[^ ]+\z/;
+    $v++ if $Y =~ m/\A[Xx]-[Aa]ctual-[Rr]ecipient:[ ]*(?:RFC|rfc)822;[ ]*[^ ]+\z/;
+    $v++ if $Z =~ m/\A[Dd]iagnostic-[Cc]ode:[ ]*.+?;[ ]*.+\z/;
+    return $v;
 }
 
-is( ignore_case($X), 3 );
-is( char_class($X),  3 );
+is( ignore_case(), 6 );
+is( char_class(),  6 );
 
-cmpthese(900000, { 
-    'm/Fwd?:/i' => sub { &ignore_case($X) }, 
-    'm/[Ff][Ww]/' => sub { &char_class($X) }, 
+cmpthese(2200000, { 
+    'm/Pattern/i  ' => sub { &ignore_case() }, 
+    'm/[Pp]attern/' => sub { &char_class() }, 
 });
 
 __END__
 
-* Mac OS X 10.9.5/Perl 5.20.1
 ok 1
 ok 2
-                Rate m/[Ff][Ww]/   m/Fwd?:/i
-m/[Ff][Ww]/ 535714/s          --        -12%
-m/Fwd?:/i   612245/s         14%          --
+                  Rate m/[Pp]attern/ m/Pattern/i  
+m/[Pp]attern/ 235798/s            --          -11%
+m/Pattern/i   265060/s           12%            --
+1..2
+perl regexp/i-option-vs-character-class.pl  19.48s user 0.02s system 99% cpu 19.532 total
+
