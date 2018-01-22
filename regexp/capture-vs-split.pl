@@ -18,11 +18,7 @@ sub docapture {
 
 sub usesplit {
     my $x = shift;
-    my $y = '';
-    if( $x =~ m/\A[-0-9A-Za-z]+?[:][ ]*.+\z/ ) {
-        my @v = split( ':', $x, 2 );
-        $y = lc $v[0];
-    }
+    my $y = lc [split( ':', $x, 2 )]->[0];
     return $y;
 }
 
