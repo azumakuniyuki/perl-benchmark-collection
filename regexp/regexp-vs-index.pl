@@ -33,8 +33,13 @@ __END__
 
 ok 1
 ok 2
-                     Rate $v =~ /\A...\z/ $v eq "......."
-$v =~ /\A...\z/ 3076923/s              --            -48%
-$v eq "......." 5970149/s             94%              --
-1..2
-perl regexp-with-az-vs-eq-operator.pl  4.83s user 0.02s system 99% cpu 4.865 total
+                          Rate regex/\ANekoNyaan\z/     index(NekoNyaan)
+regex/\ANekoNyaan\z/ 2684564/s                   --                 -44%
+index(NekoNyaan)     4761905/s                  77%                   --
+ok 3
+ok 4
+                   Rate regex/\ANeko/   index(Neko)
+regex/\ANeko/ 2877698/s            --          -40%
+index(Neko)   4819277/s           67%            --
+1..4
+perl regexp/regexp-vs-index.pl  10.75s user 0.07s system 99% cpu 10.908 total
