@@ -31,6 +31,7 @@ cmpthese(4000000, {
 
 __END__
 
+This is perl 5, version 22, subversion 1 (v5.22.1) built for darwin-2level
 ok 1
 ok 2
                           Rate regex/\ANekoNyaan\z/     index(NekoNyaan)
@@ -43,3 +44,19 @@ regex/\ANeko/ 2877698/s            --          -40%
 index(Neko)   4819277/s           67%            --
 1..4
 perl regexp/regexp-vs-index.pl  10.75s user 0.07s system 99% cpu 10.908 total
+
+
+This is perl 5, version 26, subversion 0 (v5.26.0) built for darwin-2level
+ok 1
+ok 2
+                          Rate regex/\ANekoNyaan\z/     index(NekoNyaan)
+regex/\ANekoNyaan\z/ 2985075/s                   --                 -64%
+index(NekoNyaan)     8333333/s                 179%                   --
+ok 3
+ok 4
+                   Rate regex/\ANeko/   index(Neko)
+regex/\ANeko/ 3389831/s            --          -53%
+index(Neko)   7142857/s          111%            --
+1..4
+/opt/bin/perl regexp/regexp-vs-index.pl  7.82s user 0.11s system 97% cpu 8.178 total
+
