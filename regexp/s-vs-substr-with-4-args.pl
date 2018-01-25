@@ -5,18 +5,18 @@ use Benchmark ':all';
 use Test::More 'no_plan';
 
 printf("%s\n", $^V);
-my $r = 'NekoNyaan';
+my $r = 'neko@nyaan.jp';
 sub substring {
-    my $v = '>NekoNyaan=';
-    substr($v, 0, 1, '');
-    substr($v, -1, 1, '');
+    my $v = '<neko@nyaan.jp>';
+    substr($v,  0, 1, '') if substr($v,  0, 1) eq '<';
+    substr($v, -1, 1, '') if substr($v, -1, 1) eq '>';
     return $v;
 }
 
 sub s2slashes {
-    my $v = '>NekoNyaan=';
-    $v =~ s/\A.//;
-    $v =~ s/.\z//;
+    my $v = '<neko@nyaan.jp>';
+    $v =~ s/\A[<]//;
+    $v =~ s/[>]\z//;
     return $v;
 }
 
@@ -33,17 +33,16 @@ v5.22.1
 ok 1
 ok 2
                            Rate $v =~ s/\A.// s/.\z//  substr($v, 0, 1, "")
-$v =~ s/\A.// s/.\z//  776699/s                    --                  -70%
-substr($v, 0, 1, "")  2631579/s                  239%                    --
+$v =~ s/\A.// s/.\z//  729927/s                    --                  -55%
+substr($v, 0, 1, "")  1606426/s                  120%                    --
 1..2
-perl regexp/s-vs-substr-with-4-args.pl  9.73s user 0.06s system 99% cpu 9.853 total
+perl regexp/s-vs-substr-with-4-args.pl  11.03s user 0.07s system 99% cpu 11.175 total
 
 v5.26.0
 ok 1
 ok 2
                            Rate $v =~ s/\A.// s/.\z//  substr($v, 0, 1, "")
-$v =~ s/\A.// s/.\z//  615385/s                    --                  -80%
-substr($v, 0, 1, "")  3100775/s                  404%                    --
+$v =~ s/\A.// s/.\z//  571429/s                    --                  -71%
+substr($v, 0, 1, "")  1970443/s                  245%                    --
 1..2
-/opt/bin/perl regexp/s-vs-substr-with-4-args.pl  9.91s user 0.08s system 99% cpu 10.076 total
-
+/opt/bin/perl regexp/s-vs-substr-with-4-args.pl  11.14s user 0.08s system 99% cpu 11.322 total
