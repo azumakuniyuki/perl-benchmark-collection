@@ -89,7 +89,7 @@ is( $test->{'switchcase'}, $summ );
 is( $test->{'ifelsifelse'}, $summ );
 is( $test->{'ternary'}, $summ );
 
-cmpthese( 20000, { 
+cmpthese( 1000000, { 
 		'switch-case' => sub { map { switchcase($_) } 0..9 },
 		# 'given-when' => sub { map { givenwhen($_) } 0..9 },
 		'if-elsif-else' => sub { map { ifelsifelse($_) } 0..9 },

@@ -42,6 +42,9 @@
     - my $x = 'STRING';
     - use constant x => 'STRING';
     - sub x() { 'STRING' };
+  - data/read-JSON.pl
+    - encode JSON with either XS or PP
+    - decode JSON with either XS or PP
 
 ----
 ### function
